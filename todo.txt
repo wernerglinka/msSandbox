@@ -1,0 +1,8 @@
+- multiple videos on page - DONE
+- load youtube api only when video - DONE
+- modals
+- video in modal
+- banner
+- banner with video - DONE
+- tag cloud with tag occurrences
+- add back to top button - DONE

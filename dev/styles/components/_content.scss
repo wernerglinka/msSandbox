@@ -1,0 +1,17 @@
+.content-wrapper {
+    clear: both;
+    padding: 0 $min-side-padding;
+}
+
+.banner + .content-wrapper {
+    position: relative;
+    z-index: 2;
+}
+
+.has-page-banner .banner + .content-wrapper {
+    margin-top: $banner-height - $header-height;
+}
+
+.has-full-page-banner .banner + .content-wrapper {
+    margin-top: 100vh;
+}

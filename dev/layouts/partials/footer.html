@@ -1,0 +1,47 @@
+<footer style="background-image: url('{% if footer_background_image %}{{ footer_background_image }}{% else %}{{ site.footer_background_image }}{% endif %}')">
+    <div class="container">
+        {% if has_footer_promo %}
+            {% if footer_promo_title %}
+            <div class="footer-promo-wrapper local">
+                <h2>{{ footer_promo_title }}</h2>
+                <a class="btn btn-default btn-b1" href="{{ footer_promo_url }}"> {{ footer_promo_btn_text }} </a>
+            </div>
+            {% elseif site_promos.footer_promo_title %}
+            <div class="footer-promo-wrapper global">
+                <h2>{{ site_promos.footer_promo_title }}</h2>
+                <a class="btn btn-default btn-b2" href="{{ site_promos.footer_promo_url }}"> {{ site_promos.footer_promo_btn_text }} </a>
+            </div>
+            {% endif %}
+        {% endif %}
+
+        <div class="footer-main-wrapper">
+
+            <ul class="footer-col contact-info vcard list-unstyled">
+                <li><a class="footer-logo" href="/"><img src="/assets/images/logo.png" alt=""></a></li>
+                <li class="fn">Sitename, Inc.</li>
+                <li><a class="tel" href="tel:">1.123.456.7890</a></li>
+                <li><a class="email" href="mailto:info@sitename.com">info@sitename.com</a></li>
+            </ul>
+
+            {% for link in navigation %}
+            <ul class="footer-col list-unstyled">
+                <li class="col-header">
+                    {% if link.isLink %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                    {% else %}
+                    {{ link.title }}
+                    {% endif %}
+                </li>
+                {% if link.submenu %}
+                    {% for sublink in link.submenu %}
+                    <li class="{{ sublink.linkClass }}">
+                        <a href="{{ sublink.url }}">{{ sublink.title}}</a>
+                    </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+            {% endfor %}
+        </div>
+    </div>
+    {% include "bottom-stripe.html" %}
+</footer>

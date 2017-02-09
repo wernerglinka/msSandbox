@@ -1,0 +1,20 @@
+title: Site Title
+locale: en_US
+url: https://www.sitename.com
+description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere consectetur est at lobortis.
+owner:
+    name: site-owner-name
+    email: info@sitename.com
+    disqus_shortname: "disqus-name"
+    twitter: "twittername"
+    facebook: "facebookname"
+    google:
+        analytics: UA-12345678-9
+        verify:
+    bing_verify:
+    github: Sitename
+    linkedin: sitename
+    marketo:
+        munchkin: 001-ABC-123
+
+footer_background_image: /assets/images/site-images/footer-bg.jpg

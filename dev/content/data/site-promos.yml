@@ -1,0 +1,19 @@
+# top promo
+top_message: "Elit Dolor Ultricies Vestibulum<span class='nowrap'>Jun 6, 2018</span> <a class='nowrap' href='http://google.com'>Tellus In Fringilla</a>"
+
+# footer promo
+footer_promo_title: This is the promo 1 text
+footer_promo_btn_text: promo 1 button text
+footer_promo_url: /
+
+# page promos
+# page promos may have a background image and an action button
+promo1_background_image: /assets/images/promos/promo1.jpg
+promo1_title: This is the promo 1 text
+promo1_btn_text: promo 1 button text
+promo1_url: /
+
+promo2_background_image: /assets/images/promos/promo2.jpg
+promo2_title: This is the promo 1 text
+promo2_btn_text: promo 1 button text
+promo2_url: /

@@ -1,0 +1,329 @@
+.header-wrapper {
+    height: $header-height;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    height: $header-height;
+    background-color: $header-bg-color;
+    padding: 0 30px;
+    transition: background-color 0.5s;
+
+    &.noOpacity {
+        background-color: $header-bg-color-no-opacity;
+    }
+}
+
+.top-message + .header-wrapper > header {
+    position: static;
+
+    &.isFixed {
+        position: fixed;
+        top:0;
+        z-index: 1000;
+    }
+}
+
+.has-full-page-banner .top-message,
+.has-page-banner .top-message {
+    & + .header-wrapper {
+        > header {
+            position: absolute;
+            top: $top-message-height;
+            z-index: 2;
+
+            &.isFixed {
+                position: fixed;
+                top:0;
+                z-index: 1000;
+            }
+        }
+        & + .banner {
+            top: $top-message-height;
+        }
+
+    }
+
+}
+
+
+
+
+.brand {
+    display: block;
+    max-width: $logo-width;
+    float: left;
+
+    .main-logo {
+        display: block;
+        max-width: $logo-width;
+        margin-top: ($header-height - $logo-width) / 2;
+    }
+}
+
+.main-navigation {
+    margin-top: 25px;
+    color: #fff;
+
+    &.mobile-navigation {
+        display: none;
+    }
+
+    .main-menu {
+        margin: 0;
+        clear: both;
+
+        > li {
+            padding: 0 0 10px;
+
+            > a,
+            > a:focus {
+                display: block;
+                color: $main-nav-link-color;
+                font-size: .875em; //~14px
+                font-weight: 600;
+                text-transform: uppercase;
+                padding: 0 10px;
+                line-height: 2.125; // 100px / 2
+                text-decoration: none;
+                outline: none;
+
+                &:hover {
+                    color: $main-nav-link-hover-color;
+                    text-decoration: none;
+                }
+
+                .icon {
+                    display: none;
+                }
+            }
+
+            &:hover {
+                > a,
+                > a:focus {
+                    color: $main-nav-link-hover-color;
+                }
+            }
+
+            > .dropdown-menu {
+                top: 90%;
+                background-color: $main-nav-dropdown-menu-bg-color;
+                border-radius: 0;
+                padding: 5px 0 0;
+
+                > li > a {
+                    font-size: 0.875em;
+                    color: $main-nav-link-color;
+                    padding: 10px 20px;
+
+                    &:hover {
+                        color: $main-nav-link-hover-color;
+                        background-color: $main-nav-dropdown-menu-highlight-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// the hamburger button
+.hamburger {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    display: none;
+    background: none;
+    border: none;
+
+
+    &:focus {
+        outline: 0;
+    }
+
+    span,
+    span:before,
+    span:after {
+        cursor: pointer;
+        border-radius: 1px;
+        height: 5px;
+        width: 35px;
+        background: white;
+        position: absolute;
+        top: 15px;
+        display: block;
+        content: '';
+        transition: all 500ms ease-in-out;
+    }
+    span:before {
+        top: -10px;
+    }
+    span:after {
+        top: auto;
+        bottom: -10px;
+    }
+    &:hover {
+        span,
+        span:before,
+        span:after {
+            background: $default-hover-color;
+        }
+    }
+}
+.navActive .hamburger {
+    span {
+        background-color: transparent;
+    }
+    span:before,
+    span:after {
+        top: 0;
+    }
+    span:before {
+        transform: rotate(45deg);
+    }
+    span:after {
+        transform: rotate(-45deg);
+    }
+    &:hover {
+        span:before,
+        span:after {
+            background: $default-hover-color;
+        }
+    }
+}
+
+@media (max-width: $mobile-break-point) {
+
+    header {
+        padding: 0 30px;
+    }
+    .brand {
+        position: relative;
+        max-width: 100%;
+        width: 100%;
+        height: $header-height;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: space-between;
+
+        .main-logo {
+            position: static;
+
+            img {
+                display: block;
+            }
+        }
+
+        .btn-try-now {
+            display: block;
+            font-size: $cta-btn-mobile-font-size;
+            margin: 0 20px 0 auto;
+        }
+
+        .hamburger {
+            display: block;
+            padding: 0 30px 6px 0;
+        }
+    }
+
+    .main-navigation {
+        display: none;
+
+        &.mobile-navigation {
+
+            position: fixed;
+            top: $header-height;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            padding-bottom: 50px;
+            background-color: $small-screen-menu-bg-color;
+            margin: 0 0;
+            display: none;
+
+            .main-menu {
+                height: 100%;
+                overflow: scroll;
+                padding: 0 40px $header-height;
+                float: none;
+                margin-top: 50px;
+                transition: all 1s;
+
+                > li a {
+                    font-size: 1em;
+                    line-height: 6.875em;
+                }
+
+                .dropdown-menu {
+                    position: static;
+                    float: none;
+                    border: none;
+                    padding-bottom: 20px;
+
+                    a {
+                        font-size: 1.14286em; //~16px
+                        line-height: 3em;
+                        color: $default-link-color;
+                        padding-left: 40px;
+                    }
+                }
+            }
+
+            li {
+                display: block;
+
+                 &.has-bottom-border {
+                    border-bottom: 1px solid $default-link-color;
+                }
+            }
+        }
+    }
+
+    .top-message + header .main-navigation {
+        top: 150px;
+    }
+
+    .navActive {
+        // prevent body scroll when nav is active
+        overflow:hidden;
+
+        .top-message {
+            display: none;
+        }
+
+        header {
+            background-color: $small-screen-menu-bg-color;
+        }
+
+        .main-navigation {
+            .main-menu {
+                margin-top: 0;
+
+                > li {
+
+                    > a .icon {
+                        font-size: 18px;
+                        line-height: 34px;
+
+                        &.icon-chevron-south,
+                        &.icon-chevron-east {
+                            display: inline-block;
+                        }
+                    }
+
+                    &.stayOpen > a .icon.icon-chevron-south {
+                        display: none;
+                    }
+                    &.stayOpen > a .icon.icon-chevron-north {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+}

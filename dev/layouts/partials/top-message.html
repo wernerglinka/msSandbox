@@ -1,0 +1,11 @@
+{% if has_top_message %}
+    {% if top_message %}
+    <div class="top-message local">
+        <span> {{ top_message }} </span>
+    </div>
+    {% elseif site_promos.top_message %}
+    <div class="top-message global">
+        <span> {{ site_promos.top_message }} </span>
+    </div>
+    {% endif %}
+{% endif %}

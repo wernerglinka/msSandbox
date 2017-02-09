@@ -1,0 +1,38 @@
+- title: Nav Item 1
+  isLink: false
+  url: /nav-item-1/
+  linkClass: nav-item-1-link dropdown
+  submenu:
+    - title: Vestibulum Tristique Fringilla
+      url: /nav-item-1/vestibulum-tristique-fringilla/
+      linkClass: vestibulum-tristique-fringilla-link
+    - title: Magna Sit
+      url: /nav-item-1/magna-sit/
+      linkClass: magna-sit-link
+
+- title: Nav Item 2
+  isLink: false
+  url: /nav-item-2/
+  linkClass: nav-item-2-link dropdown
+  submenu:
+    - title: Justo Bibendum
+      url: /nav-item-2/justo-bibendum/
+      linkClass: justo-bibendum-link
+    - title: Bibendum Ornare
+      url: /nav-item-2/bibendum-ornare/
+      linkClass: bibendum-ornare-link
+
+- title: Nav Item 3
+  isLink: true
+  url: /nav-item-3/
+  linkClass: nav-item-3-link
+
+- title: Blog
+  isLink: true
+  url: /blog/1/
+  linkClass: blog-link has-bottom-border
+
+- title: Contact
+  isLink: true
+  url: /contact/
+  linkClass: contact-link

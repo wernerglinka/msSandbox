@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" itemscope itemtype=”http://schema.org/Article”>
+  <head>
+    {% include "head.html" %}
+  </head>
+
+  <body class="{{ body_classes }} {% if sidebarContent %}with-sidebar{% endif %}">
+    {% include "browser-upgrade.html" %}
+
+    {% block top_message %}
+        {% include "top-message.html" %}
+    {% endblock %}
+
+    {% include "header.html" %}
+
+    {% if hasBanner %}
+        <div class="banner {{ banner_classes }}">
+            {% if hasVideo %}
+                <video src="{{ banner_video_src }}" type="video/mp4" {{ banner_video_controls }} poster="{{ banner_video_poster}}"></video>
+            {% elseif hasImage %}
+                <img src="{{ banner_image_src }}" alt="{{ banner_image_alt }}" />
+            {% endif %}
+            {% if banner_content %}
+                <div class="banner-content-wrapper">
+                    <div class="banner-content">
+                        <h1 class="page-title">{{ title }}</h1>
+                        {{ banner_content }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="content-wrapper">
+        <div class="container">
+
+            {% block main_column %}
+                <section class="main">
+                    <h1 class="page-title">{{ title }}</h1>
+                    {{ contents }}
+                </section>
+            {% endblock %}
+
+            {% block sidebar %}
+                {% if sidebarContent %}
+                    <aside class="sidebar">
+                    {{ sidebarContent }}
+                    </aside>
+                {% endif %}
+            {% endblock %}
+        </div>
+    </div>
+
+    {% block footer %}
+        {% include "footer.html" %}
+    {% endblock %}
+
+    {% block to_top %}
+        <div id="toTop"><i class="icon icon-chevron-north"></i></div>
+    {% endblock %}
+
+    {% block body_scripts %}
+        {% include "scripts.html" %}
+    {% endblock %}
+
+  </body>
+</html>

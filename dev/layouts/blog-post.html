@@ -1,0 +1,154 @@
+{% extends "default-page.html" %}
+
+{% block main_column %}
+    <section class="main">
+        <div class="page-socials wide-screen-only">
+            {% set page_url = path %}
+            {% include "social-share.html" %}
+        </div>
+        <a href="/blog/1" class="back-link"><i class="icon icon-chevron-west"></i>Back to posts</a>
+        <h1 class="page-title">{{ title }}</h1>
+        <span class="blog-publish-date">{{ date | date("MMMM D, YYYY")  }}</span>
+
+        <div class="narrow-screen-only">
+            <div class="author-info">
+
+            {% if author | is_string %}
+                {% for key, value in authors %}
+                    {% if key == author %}
+                        <ul class="author-data list-unstyled clearfix">
+                            <li class="author-portrait-wrapper"><img class="img-responsive" src="/assets/images/author-portraits/{{ value.avatar }}" alt="" /></li>
+                            <li class="author-name">{{ value.name }}</li>
+                            {% if value.position %}<li class="author-bio">{{ value.position }}</li>{% endif %}
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            {% if author.length > 1 %}
+                {% for singlePerson in author %}
+                    {% for key, value in authors %}
+                        {% if key == singlePerson %}
+                            <ul class="author-data list-unstyled clearfix">
+                                <li class="author-portrait-wrapper"><img class="author-portrait img-responsive" src="/assets/images/author-portraits/{{ value.avatar }}" alt="" /></li>
+                                <li class="author-name">{{ value.name }}</li>
+                                {% if value.position %}<li class="author-bio">{{ value.position }}</li>{% endif %}
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+
+            </div>
+            <div class="page-socials narrow-screen-only">
+                {% set page_url = path %}
+                {% include "social-share.html" %}
+            </div>
+        </div>
+
+        {{contents}}
+        <a href="/blog/1" class="back-link bottom-link"><i class="icon icon-chevron-west"></i>Back to posts</a>
+
+        <div class="page-socials bottom-links narrow-screen-only">
+            {% set page_url = path %}
+            {% include "social-share.html" %}
+        </div>
+
+        {% if comments %}
+            {% include "disqus-comments.html" %}
+            <div id="disqus_thread"></div>
+        {% endif %}
+
+    </section>
+
+{% endblock %}
+
+{% block sidebar %}
+    <aside class="sidebar">
+
+        <div class="author-info wide-screen-only">
+
+        {% if author | is_string %}
+            {% for key, value in authors %}
+                {% if key == author %}
+                    <ul class="author-data list-unstyled">
+                        <li class="author-portrait-wrapper"><img class="img-responsive" src="/assets/images/author-portraits/{{ value.avatar }}" alt="" /></li>
+                        <li class="author-name">{{ value.name }}</li>
+                        <li class="author-bio">{{ value.bio }}</li>
+                        <li>
+                            {% if value.twitter %}
+                            <a href="https://twitter.com/{{ value.twitter }}"><i class="icon icon-twitter"></i></a>
+                            {% endif %}
+                            <a href="mailto:{{ value.email }}"><i class="icon icon-envelope"></i></a>
+                        </li>
+                    </ul>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if author.length > 1 %}
+            {% for singlePerson in author %}
+                {% for key, value in authors %}
+                    {% if key == singlePerson %}
+                        <ul class="author-data list-unstyled">
+                            <li class="author-portrait-wrapper"><img class="author-portrait img-responsive" src="/assets/images/author-portraits/{{ value.avatar }}" alt="" /></li>
+                            <li class="author-name">{{ value.name }}</li>
+                            <li class="author-bio">{{ value.bio }}</li>
+                            <li>
+                                {% if value.twitter %}
+                                <a href="https://twitter.com/{{ value.twitter }}"><i class="icon icon-twitter"></i></a>
+                                {% endif %}
+                                <a href="mailto:{{ value.email }}"><i class="icon icon-envelope"></i></a>
+                            </li>
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        </div>
+
+        <div class="page-tags">
+            <h3>Recent Posts</h3>
+            <ul class="list-unstyled list-latest-blog-posts">
+                {% for latestBlogPost in latestBlogPosts %}
+                <li>
+                    <ul class="list-unstyled">
+
+                        <li class="blog-date-author">
+                            <span class="blog-publish-date">{{ latestBlogPost.date | date("MMMM D, YYYY")  }}</span>,
+                            <span class="blog-author">
+                                {% if latestBlogPost.author | is_string %}
+                                    {% for key, value in authors %}
+                                        {% if key == latestBlogPost.author %}
+                                            {{ value.name }}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+
+                                {% if latestBlogPost.author.length > 1 %}
+                                    {% for singlePerson in latestBlogPost.author %}
+                                        {% for key, value in authors %}
+                                            {% if key == singlePerson %}
+                                                <span class="multiple-authors">{{ value.name }}</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
+                            </span>
+                        </li>
+                        <li class="blog-post-title">{{ latestBlogPost.title }}</li>
+                        <li><a class="read-more-link" href="/{{ latestBlogPost.path }}">Read More <span>&raquo;</span></a></li>
+
+                    </ul>
+                    <hr>
+                </li>
+                {% endfor %}
+            </ul>
+            <h2>Tags</h2>
+            {% for item in tags %}
+            <a class="tag-link" href="/topics/{{ item.slug }}">{{ item.name }}</a>
+            {% endfor %}
+        </div>
+    </aside>
+{% endblock %}

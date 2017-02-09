@@ -1,0 +1,19 @@
+site1:
+    name: Sitename, Inc.
+    street: 123456 Company Street
+    city: Company City
+    state: Company State
+    zip: 12345-6789
+    phone: 123.456.7890
+    fax: 123.456.7891
+    email: info@sitename.com
+
+site2:
+    name: Sitename, Inc.
+    street: 123456 Company Street
+    city: Company City
+    state: Company State
+    zip: 12345-6789
+    phone: 123.456.7890
+    fax: 123.456.7891
+    email: info@sitename.com
