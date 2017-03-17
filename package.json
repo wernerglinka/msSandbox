@@ -1,5 +1,5 @@
 {
-  "name": "perimeterX_Website_2017",
+  "name": "msSandbox",
   "version": "0.0.1",
   "description": "",
   "main": "",
@@ -7,22 +7,29 @@
   "license": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wernerglinka/px01.git"
+    "url": "https://github.com/wernerglinka/msSandbox.git"
   },
   "homepage": "",
   "devDependencies": {
     "browser-sync": "^2.18.6",
+    "eslint": "^3.15.0",
+    "eslint-config-google": "^0.7.1",
+    "eslint-plugin-promise": "^3.4.1",
+    "eslint-plugin-standard": "^2.0.1",
     "finalhandler": "^0.4.0",
     "metalsmith-writemetadata": "^0.4.5",
     "serve-static": "^1.10.0"
   },
   "dependencies": {
+    "babel-preset-es2015": "^6.22.0",
     "gulp": "^3.9.0",
     "gulp-add-src": "^0.2.0",
     "gulp-autoprefixer": "^3.1.1",
+    "gulp-babel": "^6.1.2",
     "gulp-clean-css": "^2.3.2",
     "gulp-concat": "^2.6.1",
     "gulp-modulizr": "0.0.2",
+    "gulp-order": "^1.1.1",
     "gulp-sass": "^3.0.0",
     "gulp-sequence": "^0.4.6",
     "gulp-sourcemaps": "^1.9.1",
@@ -31,6 +38,7 @@
     "jquery": "^3.1.1",
     "jquery-hoverintent": "^1.8.2",
     "jquery.easing": "^1.4.1",
+    "js-breakpoints": "^1.0.2",
     "marked": "^0.3.6",
     "metalsmith": "^2.3.0",
     "metalsmith-assets": "^0.1.0",

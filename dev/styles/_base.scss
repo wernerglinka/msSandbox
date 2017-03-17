@@ -16,7 +16,8 @@
 html,
 footer {
     font-size: 100%;
-    background-color: $window-bg-color;  // overwrite in footer.scss
+    font-weight: 300;
+    background-color: $footer-bg-color;  // overwrite in footer.scss
 }
 body {
     font-family: $default-font-family-sans-serif;
@@ -52,6 +53,10 @@ p {
     font-size: 1em;
     line-height: 1.4;
     font-weight: 300;
+
+    &.center {
+        text-align: center;
+    }
 }
 
 input,

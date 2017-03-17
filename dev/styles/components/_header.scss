@@ -8,14 +8,18 @@ header {
     z-index: 1000;
     width: 100%;
     height: $header-height;
-    background-color: $header-bg-color;
+    background-color: $header-bg-color-no-opacity;
     padding: 0 30px;
     transition: background-color 0.5s;
-
-    &.noOpacity {
-        background-color: $header-bg-color-no-opacity;
-    }
 }
+.has-page-banner header {
+    background-color: $header-bg-color;
+}
+
+header.noOpacity {
+    background-color: $header-bg-color-no-opacity;
+}
+
 
 .top-message + .header-wrapper > header {
     position: static;

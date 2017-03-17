@@ -3,5 +3,6 @@
 .nav-item-1 .nav-item-1-link > a,
 .nav-item-2 .nav-item-2-link > a,
 .nav-item-3 .nav-item-3-link > a {
-    color: $main-nav-link-active-color !important;
+    color: $active-link-color !important;
+    cursor: default;
 }

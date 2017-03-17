@@ -5,13 +5,18 @@
     padding: 10px $min-side-padding 0;
     color: $bottom-stripe-text-color;
     background-color: $bottom-stripe-bg-color;
+    border-top: $default-border;
     font-size: 0.75em;
 
     :first-child {
-        order: 2
+        order: 2;
+
+        > li {
+            vertical-align: top;
+        }
     }
     :last-child {
-        order: 1
+        order: 1;
     }
 
     a {

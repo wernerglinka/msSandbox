@@ -1,5 +1,5 @@
 footer {
-
+    color: $light-text-color;
 }
 .footer-main-wrapper {
     display: flex;
@@ -25,14 +25,16 @@ footer {
     }
 
     li {
-        color: $default-text-color;
+        color: $light-text-color;
         padding: 7px 0;
         margin: 0;
     }
 
     .col-header {
-        color: $default-text-color;
         text-transform: uppercase;
+        font-size: 0.875em;
+        font-weight: 400;
+        color: #fff;
         padding-top: 0;
     }
 
@@ -43,6 +45,12 @@ footer {
             color: $footer-nav-link-hover-color;
             text-decoration: none;
         }
+    }
+}
+
+.vcard {
+    li:first-child {
+        width: 100px;
     }
 }
 

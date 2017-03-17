@@ -1,0 +1,12 @@
+//body:after {
+//    content: '{ "key1": "whatever", "key2": "abracadabra", "key3": "very-small-screen"}';
+//    display: none;
+//}
+
+
+@media ( min-width:768px ) {
+    body {
+        @include defineBreakpoint("GENERIC_BIG_SCREEN_BREAKPOINT");
+        // generic breakpoint styles
+    }
+}

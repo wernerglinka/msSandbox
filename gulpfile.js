@@ -1,6 +1,5 @@
 /* eslint capitalized-comments: "always" */
 
-
 var path = require('path');
 var argv = require('minimist')(process.argv.slice(2));
 var gulp = require('gulp');
@@ -38,7 +37,9 @@ var destPath = "./build";
 
 // assets
 var sequence = require('gulp-sequence');
+var order = require('gulp-order');
 var sass = require('gulp-sass');
+var babel = require('gulp-babel');
 var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
@@ -193,7 +194,8 @@ gulp.task('vendorScripts', function() {
     return gulp.src([
             "node_modules/jquery/dist/jquery.js",
             "node_modules/jquery.easing/jquery.easing.js",
-            "node_modules/jquery-hoverintent/jquery.hoverIntent.js"
+            "node_modules/jquery-hoverintent/jquery.hoverIntent.js",
+            "node_modules/js-breakpoints/breakpoints.js"
         ])
         .pipe(concat('vendors.min.js'))
         .pipe(compressJS())
@@ -201,13 +203,27 @@ gulp.task('vendorScripts', function() {
 });
 
 gulp.task('scripts', function () {
-    return gulp.src(path.join(__dirname, scriptPath, 'main.js'))
-        .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/scripts')));
-});
-
-gulp.task('prodScripts', function () {
-    return gulp.src(path.join(__dirname, scriptPath, 'main.js'))
-        .pipe(compressJS())
+    return gulp.src(path.join(__dirname, scriptPath, '**/*.js'))
+        .pipe(sourcemaps.init())
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(order([
+          path.join(__dirname, scriptPath, 'ready.js'),
+          path.join(__dirname, scriptPath, 'modules/touchClick.js'),
+          path.join(__dirname, scriptPath, 'modules/hoverMenu.js'),
+          path.join(__dirname, scriptPath, 'modules/mobileMenu.js'),
+          path.join(__dirname, scriptPath, 'modules/youTubeVideos.js'),
+          path.join(__dirname, scriptPath, 'modules/lineNumbers.js'),
+          path.join(__dirname, scriptPath, 'modules/externalLinks.js'),
+          path.join(__dirname, scriptPath, 'modules/modifyMarketoForm.js'),
+          path.join(__dirname, scriptPath, 'modules/scrollHomeNav.js'),
+          path.join(__dirname, scriptPath, 'modules/smallImage.js'),
+          path.join(__dirname, scriptPath, 'modules/bannerBackground.js'),
+          path.join(__dirname, scriptPath, 'modules/scrollToTop.js')
+        ]))
+        .pipe(concat('main.js'))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/scripts')));
 });
 
@@ -218,14 +234,6 @@ gulp.task('styles', function() {
         .pipe(sass({style: 'expanded'}))
         .pipe(autoprefixer('last 2 version'))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/styles')));
-});
-
-// compile style sheet for production
-gulp.task('stylesProduction', function() {
-    return gulp.src(path.join(__dirname, stylePath, 'main.scss'))
-        .pipe(sass())
-        .pipe(autoprefixer('last 2 version'))
         .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/styles')));
 });
 
@@ -264,19 +272,5 @@ gulp.task('default', ['buildDev'], function () {
     "./dev/sources/**/*"
   ], ['refresh']);
 });
-
-
-gulp.task('buildProd', function (cb) {
-  sequence([
-    'vendorScripts',
-    'prodScripts',
-    'stylesProduction',
-    ],
-    'metalsmith',
-    cb
-  )
-});
-
-
 
 
