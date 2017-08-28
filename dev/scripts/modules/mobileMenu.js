@@ -3,11 +3,15 @@
 // function to attach a class to the body element when the hamburger is touched/clicked
 var mobileMenu = (function () {
     "use strict";
-    let thisPage = $("body");
-    let hamburger = $(".hamburger");
-    let topMessage = $(".top-message");
 
-    let init = function (MAX_SCREEN_WIDTH) {
+    let init = function () {
+
+        let thisPage = $("body");
+        let hamburger = $(".hamburger");
+        let topMessage = $(".top-message");
+
+        var mobileScreenWidth = 768;
+
         hamburger.on("click", function () {
             let thisMenuLayer = $(".mobile-navigation");
             if (thisPage.hasClass("navActive")) {
@@ -26,15 +30,8 @@ var mobileMenu = (function () {
         });
 
         $(window).resize(function () {
-            if ($(window).width() > MAX_SCREEN_WIDTH) {
+            if ($(window).width() > mobileScreenWidth) {
                 thisPage.removeClass("navActive");
-                if (!topMessage.is(":visible")) {
-                    topMessage.show();
-                }
-                $(".main-navigation").show();
-                $(".mobile-navigation").hide();
-            } else {
-                $(".main-navigation").hide();
             }
         });
     };

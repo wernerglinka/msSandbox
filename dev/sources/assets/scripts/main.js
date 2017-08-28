@@ -2,7 +2,7 @@
 
 /*eslint no-unused-vars: 0*/
 
-// function for change nav background when banner is scrolled up
+// function for change nav background opacaity when banner is scrolled up
 var bannerBackground = function () {
     "use strict";
 
@@ -158,11 +158,14 @@ var lineNumbers = function () {
 var mobileMenu = function () {
     "use strict";
 
-    var thisPage = $("body");
-    var hamburger = $(".hamburger");
-    var topMessage = $(".top-message");
+    var init = function init() {
 
-    var init = function init(MAX_SCREEN_WIDTH) {
+        var thisPage = $("body");
+        var hamburger = $(".hamburger");
+        var topMessage = $(".top-message");
+
+        var mobileScreenWidth = 768;
+
         hamburger.on("click", function () {
             var thisMenuLayer = $(".mobile-navigation");
             if (thisPage.hasClass("navActive")) {
@@ -181,15 +184,8 @@ var mobileMenu = function () {
         });
 
         $(window).resize(function () {
-            if ($(window).width() > MAX_SCREEN_WIDTH) {
+            if ($(window).width() > mobileScreenWidth) {
                 thisPage.removeClass("navActive");
-                if (!topMessage.is(":visible")) {
-                    topMessage.show();
-                }
-                $(".main-navigation").show();
-                $(".mobile-navigation").hide();
-            } else {
-                $(".main-navigation").hide();
             }
         });
     };

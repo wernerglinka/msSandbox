@@ -1,6 +1,6 @@
 /*eslint no-unused-vars: 0*/
 
-// function for change nav background when banner is scrolled up
+// function for change nav background opacaity when banner is scrolled up
 var bannerBackground = (function () {
     "use strict";
     let bannerHeight = $(".banner").height();

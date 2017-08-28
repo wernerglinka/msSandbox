@@ -25,6 +25,12 @@
     }
 }
 
+.navActive {
+    .top-message {
+        display: none;
+    }
+}
+
 // this is content depending. Length of message will determine the breakpoint.
 @media (max-width: 506px) {
     .top-message {

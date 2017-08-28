@@ -38,6 +38,7 @@ header.noOpacity {
             position: absolute;
             top: $top-message-height;
             z-index: 2;
+            transition: all 0.5s;
 
             &.isFixed {
                 position: fixed;
@@ -48,15 +49,26 @@ header.noOpacity {
         & + .banner {
             top: $top-message-height;
         }
-
     }
-
 }
 
+.has-full-page-banner.navActive .top-message,
+.has-page-banner.navActive .top-message {
+    & + .header-wrapper {
+        > header {
+
+            top: 0;
 
 
+
+        }
+
+    }
+}
 
 .brand {
+    position: relative;
+    z-index: 1001;
     display: block;
     max-width: $logo-width;
     float: left;
@@ -71,10 +83,6 @@ header.noOpacity {
 .main-navigation {
     margin-top: 25px;
     color: #fff;
-
-    &.mobile-navigation {
-        display: none;
-    }
 
     .main-menu {
         margin: 0;
@@ -131,6 +139,10 @@ header.noOpacity {
             }
         }
     }
+}
+
+.mobile-navigation {
+    display: none;
 }
 
 // the hamburger button
@@ -236,54 +248,65 @@ header.noOpacity {
 
     .main-navigation {
         display: none;
+    }
 
-        &.mobile-navigation {
+    .mobile-navigation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1000;
+        padding-bottom: 50px;
+        background-color: $small-screen-menu-bg-color;
+        margin: 0 0;
+        display: none;
 
-            position: fixed;
-            top: $header-height;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1000;
-            padding-bottom: 50px;
-            background-color: $small-screen-menu-bg-color;
-            margin: 0 0;
-            display: none;
+        .main-menu {
+            height: 100%;
+            overflow: scroll;
+            padding: 0 40px $header-height;
+            float: none;
+            margin-top: 200px;
+            transition: all 1s;
 
-            .main-menu {
-                height: 100%;
-                overflow: scroll;
-                padding: 0 40px $header-height;
-                float: none;
-                margin-top: 50px;
-                transition: all 1s;
+            > li {
 
-                > li a {
-                    font-size: 1em;
-                    line-height: 6.875em;
-                }
+                a, span {
+                    display: block;
+                    font-size: 1.5em;
+                    line-height: 3em;
+                    color: $default-link-color;
+                    padding-left: 30px;
 
-                .dropdown-menu {
-                    position: static;
-                    float: none;
-                    border: none;
-                    padding-bottom: 20px;
-
-                    a {
-                        font-size: 1.14286em; //~16px
-                        line-height: 3em;
-                        color: $default-link-color;
-                        padding-left: 40px;
+                    &:hover {
+                        cursor: pointer;
+                        background-color: $main-nav-dropdown-menu-bg-color;
                     }
                 }
             }
 
-            li {
-                display: block;
+            .dropdown-menu {
+                position: static;
+                float: none;
+                border: none;
+                padding-bottom: 20px;
+                background: none;
 
-                 &.has-bottom-border {
-                    border-bottom: 1px solid $default-link-color;
+                a {
+                    font-size: 1.14286em; //~16px
+                    line-height: 3em;
+                    color: $default-link-color;
+                    padding-left: 60px;
                 }
+            }
+        }
+
+        li {
+            display: block;
+
+             &.has-bottom-border {
+                border-bottom: 1px solid $default-link-color;
             }
         }
     }
@@ -304,13 +327,14 @@ header.noOpacity {
             background-color: $small-screen-menu-bg-color;
         }
 
-        .main-navigation {
+        .mobile-navigation {
             .main-menu {
-                margin-top: 0;
+                margin-top: 150px; // gives it a little upwards animation when opened
 
                 > li {
 
-                    > a .icon {
+                    > a .icon,
+                    > span .icon {
                         font-size: 18px;
                         line-height: 34px;
 
@@ -318,15 +342,41 @@ header.noOpacity {
                         &.icon-chevron-east {
                             display: inline-block;
                         }
+
+                        &.icon-chevron-north {
+                            display: none;
+                        }
                     }
 
-                    &.stayOpen > a .icon.icon-chevron-south {
-                        display: none;
+                    &.stayOpen > a,
+                    &.stayOpen > span {
+                        .icon.icon-chevron-south {
+                            display: none;
+                        }
+                        .icon.icon-chevron-north {
+                            display: inline-block;
+                        }
                     }
-                    &.stayOpen > a .icon.icon-chevron-north {
-                        display: inline-block;
-                    }
+
                 }
+            }
+        }
+    }
+}
+
+@media (max-width: $small-screen-break-point) {
+    .top-message {
+        display: none;
+    }
+
+    .has-page-banner .top-message {
+        display: none;
+
+        & + .header-wrapper + .banner {
+            top: 0;
+
+            & > header {
+                top: 0;
             }
         }
     }
