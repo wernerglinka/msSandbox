@@ -24,6 +24,7 @@ var metadata = require('metalsmith-metadata');
 var frontmatter = require('metalsmith-matters');
 var highlightCode = require('metalsmith-prism');
 var writemetadata = require('metalsmith-writemetadata');
+var renamer = require('metalsmith-renamer');
 var recentPosts = require('./local_modules/metalsmith-recent-blog-posts');
 var marked = require('marked');
 
@@ -57,7 +58,23 @@ nunjucks
     .addFilter('is_string', function(obj) {
       return typeof obj == 'string';
     })
-    .addFilter('date', dateFilter);
+    .addFilter('date', dateFilter)
+    // replaces a file extension with a "/". Needed in generating custom XML feeds
+    .addFilter('makePermalink', function(obj) {
+      return obj.replace(/.md/g , '/');
+    })
+    // converts a date into a UTC string. Needed for XML dates
+    .addFilter('UTCdate', function (date) {
+      return date.toUTCString();
+    })
+    // when building an XML page any text that contains html "<", ">" and "&" characters need to be escaped
+    .addFilter('escapeHTML', function (text) {
+      return ( text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+    })
+    // strips all html from a string
+    .addFilter('stripHTML', function (htmlString) {
+      return htmlString.replace(/<[^>]+>/g, '');
+    });
 
 // metalsmith
 function setupMetalsmith(callback) {
@@ -121,8 +138,8 @@ function setupMetalsmith(callback) {
         }))
 
         .use(recentPosts({
-          "latest_quantity": 4, // length of the recent posts list
-          "featured_quatity": 4 // length of the featured posts list
+          "latest_quantity": 2, // length of the recent posts list
+          "featured_quatity": 2 // length of the featured posts list
         }))
 
         .use(inPlace({
@@ -153,6 +170,17 @@ function setupMetalsmith(callback) {
             "partials": "./dev/layouts/partials"
         }))
 
+        // we created the xml file using a html template. here we change the
+        // file extension to xml
+        .use(renamer({
+          htmlToXml: {
+            pattern: 'feeds/*.html',
+            rename: function(name) {
+              return name.replace(/html/ , 'xml')
+            }
+          }
+        }))
+
         .use(assets({
             "source": "./dev/sources",
             "destination": "./"
@@ -170,11 +198,11 @@ function setupMetalsmith(callback) {
             "sitemap": "http://www.sitename.com/sitemap.xml"
         }))
 
-//        .use(writemetadata({
-//          pattern: ['**/*.html'],
-//          ignorekeys: ['next', 'contents', 'previous'],
-//          bufferencoding: 'utf8'
-//       }))
+        .use(writemetadata({
+          pattern: ['**/*.html'],
+          ignorekeys: ['next', 'contents', 'previous'],
+          bufferencoding: 'utf8'
+        }))
 
         .build(function(err) {
             if (err) {

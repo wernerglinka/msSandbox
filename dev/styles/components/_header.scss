@@ -92,7 +92,8 @@ header.noOpacity {
             padding: 0 0 10px;
 
             > a,
-            > a:focus {
+            > a:focus,
+            > span {
                 display: block;
                 color: $main-nav-link-color;
                 font-size: .875em; //~14px
@@ -232,12 +233,6 @@ header.noOpacity {
             img {
                 display: block;
             }
-        }
-
-        .btn-try-now {
-            display: block;
-            font-size: $cta-btn-mobile-font-size;
-            margin: 0 20px 0 auto;
         }
 
         .hamburger {

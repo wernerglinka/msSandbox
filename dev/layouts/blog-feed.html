@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+
+  <channel>
+    <atom:link href="{{ site.url}}/feeds/blog.xml" rel="self" type="application/rss+xml" />
+    <title>Blog PerimeterX</title>
+    <pubDate>{{stats.atime | UTCdate }}</pubDate>
+    <lastBuildDate>{{stats.atime | UTCdate }}</lastBuildDate>
+    <generator>Metalsmith</generator>
+    <link>{{ site.url}}</link>
+    <language>{{ site.language }}</language>
+    <copyright>2017 {{ site.owner.name }}</copyright>
+    <image><title>Blog PerimeterX</title>
+      <url>{{ site.url}}/assets/images/logo.png</url>
+      <link>{{ site.url}}</link>
+    </image>
+    <description>Perimeter Blog</description>
+
+    {% for blogpost in collections.blog %}
+    <item>
+      <title><![CDATA[{{ blogpost.title | stripHTML }}]]></title>
+      <link>{{ site.url }}/{{ blogpost.path | makePermalink }}</link>
+      <guid isPermaLink="true">{{ site.url }}/{{ blogpost.path | makePermalink }}</guid>
+      <category>{{ blogpost.categories }}</category>
+      <pubDate>{{ blogpost.date | UTCdate }}</pubDate>
+      <description><![CDATA[{{ blogpost.excerpt | escapeHTML }}]]></description>
+    </item>
+    {% endfor %}
+
+  </channel>
+</rss>

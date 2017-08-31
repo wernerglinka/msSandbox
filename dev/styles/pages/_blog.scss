@@ -239,8 +239,16 @@ hr {
     background: #d6d9db;
 }
 
-.list-latest-blog-posts {
+.list-blog-posts {
     margin-top: -20px;
+
+    > li {
+        border-bottom: $default-border;
+
+        > ul {
+            margin-bottom: 0;
+        }
+    }
 }
 
 .author-portrait-wrapper {

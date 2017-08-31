@@ -47,3 +47,9 @@ Assets are located in `dev/sources/assets`. The favicon and redirects file are l
 
 ### Drafts
 Pages not yet ready for publishing can be ignored by the build process by adding `draft: true` to the page from matter.
+
+
+### Providing a RSS feed of blogposts
+Blog post feeds are available at /feeds/blog.xml
+The feed is build without any plugins. We first build a page from the blog collection with an XML template "blog-feed.html". The resulting html file is then renamed with the metalsmith-renamer plugin.
+This approach allows us to create as many feeds as we like.

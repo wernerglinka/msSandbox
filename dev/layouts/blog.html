@@ -83,7 +83,8 @@
 {% block sidebar %}
     <aside class="sidebar">
         <h3>Featured Posts</h3>
-        <ul class="list-unstyled list-latest-blog-posts">
+
+        <ul class="list-unstyled list-blog-posts">
             {% for featuredBlogPost in featuredBlogPosts %}
             <li>
                 <ul class="list-unstyled">
@@ -113,13 +114,12 @@
                     <li><a class="read-more-link" href="/{{ featuredBlogPost.path }}/">Read More <span>&raquo;</span></a></li>
 
                 </ul>
-                <hr>
             </li>
             {% endfor %}
         </ul>
 
         <h3>Recent Posts</h3>
-        <ul class="list-unstyled list-latest-blog-posts">
+        <ul class="list-unstyled list-blog-posts">
             {% for latestBlogPost in latestBlogPosts %}
             <li>
                 <ul class="list-unstyled">
@@ -149,7 +149,6 @@
                     <li><a class="read-more-link" href="/{{ latestBlogPost.path }}/">Read More <span>&raquo;</span></a></li>
 
                 </ul>
-                <hr>
             </li>
             {% endfor %}
         </ul>
