@@ -1,6 +1,6 @@
 ---
 layout: blog-post.html
-title: Maecenas sed diam
+title: Fermentum Inceptos
 description: "Vestibulum id ligula porta felis euismod semper. Curabitur blandit tempus porttitor."
 excerpt: "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam id dolor id nibh ultricies vehicula ut id elit."
 categories:

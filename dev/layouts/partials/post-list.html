@@ -1,0 +1,16 @@
+<ul class="list-unstyled list-blog-posts">
+    {% for thisBlogPost in blogPosts %}
+    <li>
+        <ul class="list-unstyled">
+            <li class="blog-date-author">
+                <div class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</div>
+                <div class="blog-author">
+                    {% include "author-get-name.html" %}
+                </div>
+            </li>
+            <li class="blog-post-title">{{ thisBlogPost.title }}</li>
+            <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
+        </ul>
+    </li>
+    {% endfor %}
+</ul>

@@ -12,33 +12,13 @@
 
         <div class="narrow-screen-only">
             <div class="author-info">
+                {% if author | is_string %}
+                    {% include "author-show-single.html" %}
+                {% endif %}
 
-            {% if author | is_string %}
-                {% for key, value in authors %}
-                    {% if key == author %}
-                        <ul class="author-data list-unstyled clearfix">
-                            <li class="author-portrait-wrapper"><img class="img-responsive" src="/assets/images/author-portraits/{{ value.avatar }}" alt="" /></li>
-                            <li class="author-name">{{ value.name }}</li>
-                            {% if value.position %}<li class="author-bio">{{ value.position }}</li>{% endif %}
-                        </ul>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-
-            {% if author.length > 1 %}
-                {% for singlePerson in author %}
-                    {% for key, value in authors %}
-                        {% if key == singlePerson %}
-                            <ul class="author-data list-unstyled clearfix">
-                                <li class="author-portrait-wrapper"><img class="author-portrait img-responsive" src="/assets/images/author-portraits/{{ value.avatar }}" alt="" /></li>
-                                <li class="author-name">{{ value.name }}</li>
-                                {% if value.position %}<li class="author-bio">{{ value.position }}</li>{% endif %}
-                            </ul>
-                        {% endif %}
-                    {% endfor %}
-                {% endfor %}
-            {% endif %}
-
+                {% if author.length > 1 %}
+                    {% include "author-show-multiple.html" %}
+                {% endif %}
             </div>
             <div class="page-socials narrow-screen-only">
                 {% set page_url = path %}
@@ -66,114 +46,148 @@
 {% block sidebar %}
     <aside class="sidebar">
         <div class="author-info wide-screen-only">
-        {# "author" is defined in the page frontmatter and "authors" is defined in content/data/authors.yml #}
-        {% if author | is_string %}
-            {% for key, value in authors %}
-                {% if key == author %}
-                    <ul class="author-data list-unstyled">
-                        <li class="author-portrait-wrapper"><img class="img-responsive" src="/assets/images/author-portraits/{{ value.avatar }}" alt="" /></li>
-                        <li class="author-name">{{ value.name }}</li>
-                        <li class="author-bio">{{ value.bio }}</li>
-                        <li>
-                            {% if value.twitter %}
-                            <a href="https://twitter.com/{{ value.twitter }}"><i class="icon icon-twitter"></i></a>
-                            {% endif %}
-                            <a href="mailto:{{ value.email }}"><i class="icon icon-envelope"></i></a>
-                        </li>
-                    </ul>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
+            {# "author" is defined in the page frontmatter and "authors" is defined in content/data/authors.yml #}
 
-        {% if author.length > 1 %}
-            {% for singlePerson in author %}
-                {% for key, value in authors %}
-                    {% if key == singlePerson %}
-                        <ul class="author-data list-unstyled">
-                            <li class="author-portrait-wrapper"><img class="author-portrait img-responsive" src="/assets/images/author-portraits/{{ value.avatar }}" alt="" /></li>
-                            <li class="author-name">{{ value.name }}</li>
-                            <li class="author-bio">{{ value.bio }}</li>
-                            <li>
-                                {% if value.twitter %}
-                                <a href="https://twitter.com/{{ value.twitter }}"><i class="icon icon-twitter"></i></a>
-                                {% endif %}
-                                <a href="mailto:{{ value.email }}"><i class="icon icon-envelope"></i></a>
-                            </li>
-                        </ul>
-                    {% endif %}
-                {% endfor %}
-            {% endfor %}
-        {% endif %}
+            {% if author | is_string %}
+                {% set hasBio = true %}
+                {% include "author-show-single.html" %}
+            {% endif %}
 
+            {% if author.length > 1 %}
+                {% set hasBio = true %}
+                {% include "author-show-multiple.html" %}
+            {% endif %}
         </div>
 
         {# list latest posts. number of posts is defined with 'recent_quantiy" option of the recentPosts plugin in gulp.js #}
 
         <div class="post-lists">
             <h3>Recent Posts</h3>
-            <ul class="list-unstyled list-blog-posts">
-                {% for latestBlogPost in latestBlogPosts %}
-                <li>
-                    <ul class="list-unstyled">
-
-                        <li class="blog-date-author">
-                            <span class="blog-publish-date">{{ latestBlogPost.date | date("MMMM D, YYYY")  }}</span>,
-                            <span class="blog-author">
-                                {# "author" is defined in the page frontmatter and "authors" is defined in content/data/authors.yml #}
-                                {% if latestBlogPost.author | is_string %}
-                                    {% for key, value in authors %}
-                                        {% if key == latestBlogPost.author %}
-                                            {{ value.name }}
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-
-                                {% if latestBlogPost.author.length > 1 %}
-                                    {% for singlePerson in latestBlogPost.author %}
-                                        {% for key, value in authors %}
-                                            {% if key == singlePerson %}
-                                                <span class="multiple-authors">{{ value.name }}</span>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endfor %}
-                                {% endif %}
-                            </span>
-                        </li>
-                        <li class="blog-post-title">{{ latestBlogPost.title }}</li>
-                        <li><a class="read-more-link" href="/{{ latestBlogPost.path }}">Read More <span>&raquo;</span></a></li>
-
-                    </ul>
-                </li>
-                {% endfor %}
-            </ul>
+            {% set blogPosts = latestBlogPosts %}
+            {% include "post-list.html" %}
 
             {# list all posts by this/these author/s #}
 
+
+            {# section to display other blog posts by the author/s of this blog post page #}
+            {# we are using a metadata array "allSortedBlogPosts" to find any posts that  #}
+            {# are by the author/s of this blog ost page.                                 #}
+
             {% if author | is_string %}
-            <h3>All Posts by this Author</h3>
+            <h3>All Posts by {{ authors[author].name }}</h3>
             {% else %}
-            <h3>All Posts by these Authors</h3>
+            <h3>All Posts by
+                {% for thisAuthor in author %}
+                    {{ authors[thisAuthor].name }}
+                    {% if (not loop.last) %}, {% endif %}
+                {% endfor %}
+            </h3>
             {% endif %}
 
             <ul class="list-unstyled list-blog-posts">
                 {% for thisBlogPost in allSortedBlogPosts %}
+
+                    {# case: this blogpost is by a single author AND the post in allSortedBlogPosts is by a single author AND the author of both are the same #}
+
                     {% if ( thisBlogPost.author | is_string ) and ( thisBlogPost.author == author ) %}
-                    <li>
-                        <ul class="list-unstyled">
-                            <li class="blog-date-author">
-                                <span class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</span>,
-                            </li>
-                            <li class="blog-post-title">{{ thisBlogPost.title }}</li>
-                            <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
-                        </ul>
-                    </li>
+                        <li>
+                            <ul class="list-unstyled">
+                                <li class="blog-post-title">{{ thisBlogPost.title }}</li>
+                                <li class="blog-date-author">
+                                    <li class="author-name">{{ thisBlogPost.author }}</li>
+                                    <span class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</span>,
+                                </li>
+                                <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
+                            </ul>
+                        </li>
                     {% endif %}
+
+                    {# case: this blogpost is by a single author AND the post in allSortedBlogPosts is by multiple authors AND this author is among them #}
+
+                    {% if ( thisBlogPost.author | is_string ) and ( thisBlogPost.author.length > 0 ) %}
+                        {% for thisAuthor in thisBlogPost.author %}
+                            {% if thisAuthor === author %}
+                                <li>
+                                    <ul class="list-unstyled">
+                                        <li class="blog-post-title">{{ thisBlogPost.title }}</li>
+                                        <li class="blog-date-author">
+                                            <li class="author-name">
+                                                {% for name in thisBlogPost.author %}
+                                                    <span class="multiple-authors">{{ name }}</span>
+                                                {% endfor %}
+                                            </li>
+                                            <span class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</span>,
+                                        </li>
+
+                                        <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {# case: this blogpost is by multiple authors AND the post in allSortedBlogPosts is by a single author AND the author of the post in allSortedBlogPosts is among the authors of this blogpost #}
+
+                    {% if ( thisBlogPost.author | is_string ) and ( author.length > 0 ) %}
+                        {% for thisAuthor in author %}
+                            {% if thisAuthor === thisBlogPost.author %}
+                                <li>
+                                    <ul class="list-unstyled">
+                                        <li class="blog-post-title">{{ thisBlogPost.title }}</li>
+                                        <li class="blog-date-author">
+                                            <li class="author-name">
+                                                <span class="multiple-authors">{{ thisBlogPost.author }}</span>
+                                            </li>
+                                            <span class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</span>,
+                                        </li>
+                                        <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {# case: this blogpost is by multiple authors AND the post in allSortedBlogPosts is by multiple authors AND an author of the post in allSortedBlogPosts is among the authors of this blogpost #}
+
+                    {% if ( thisBlogPost.author.length > 0 ) and ( author.length > 0 ) %}
+                        {% set match = false %}
+                        {% for thisAuthor in author %}
+                            {% for thisListAuthor in thisBlogPost.author %}
+                                {% if thisAuthor === thisListAuthor %}
+
+                                    {# if we find the current blog post we pass #}
+
+                                    {% if not (thisBlogPost.title === title) %}
+
+                                        {# we loop through all listed blog posts for every author of this blog post.    #}
+                                        {# There might be other posts from this set of authors. In case we have already #}
+                                        {# found a blog post for an author we do not want to list it again.             #}
+
+                                        {% if match === false %}
+                                            {% set match = true %}
+                                            <li>
+                                                <ul class="list-unstyled">
+                                                    <li class="blog-post-title">{{ thisBlogPost.title }}</li>
+                                                    <li class="blog-date-author">
+                                                        <li class="author-name">
+                                                            {% for name in thisBlogPost.author %}
+                                                                <span class="multiple-authors">{{ name }}</span>
+                                                            {% endfor %}
+                                                        </li>
+                                                        <span class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</span>,
+                                                    </li>
+                                                    <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
+                                                </ul>
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+
                 {% endfor %}
             </ul>
-
-
-
-
 
         </div>
 

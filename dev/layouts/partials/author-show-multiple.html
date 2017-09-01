@@ -1,0 +1,22 @@
+{% for singlePerson in author %}
+    {% for key, value in authors %}
+        {% if key == singlePerson %}
+            <ul class="author-data list-unstyled">
+                <li class="author-portrait-wrapper"><img class="author-portrait img-responsive" src="/assets/images/author-portraits/{{ value.avatar }}" alt="" /></li>
+                <li class="author-name">{{ value.name }}</li>
+                {% if value.position %}
+                <li class="author-bio">{{ value.position }}</li>
+                {% endif %}
+                {% if hasBio %}
+                <li class="author-bio">{{ value.bio }}</li>
+                {% endif %}
+                <li>
+                    {% if value.twitter %}
+                    <a href="https://twitter.com/{{ value.twitter }}"><i class="icon icon-twitter"></i></a>
+                    {% endif %}
+                    <a href="mailto:{{ value.email }}"><i class="icon icon-envelope"></i></a>
+                </li>
+            </ul>
+        {% endif %}
+    {% endfor %}
+{% endfor %}

@@ -16,6 +16,7 @@
         smallImage.init();
         bannerBackground.init();
         scrollToTop.init();
+        confirmLeave.init();
     });
     // end ready function
 })();

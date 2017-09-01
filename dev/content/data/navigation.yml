@@ -9,6 +9,9 @@
     - title: Magna Sit
       url: /nav-item-1/magna-sit/
       linkClass: magna-sit-link
+    - title: Leave Page
+      url: /nav-item-1/leave-page
+      linkClass: leave-page
 
 - title: Nav Item 2
   isLink: false

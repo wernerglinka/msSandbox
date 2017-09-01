@@ -30,6 +30,38 @@ var bannerBackground = function () {
 
 /*eslint no-unused-vars: 0*/
 
+// function to extend jQuery event >> touchclick for touch and click
+var confirmLeave = function () {
+    "use strict";
+
+    var init = function init() {
+        if ($("body").hasClass("confirm-leave")) {
+
+            $("#test").hide();
+
+            var letGo = false;
+
+            var onbeforeunload = function onbeforeunload(e) {
+
+                $("#test").show();
+
+                var dialogText = "Dialog text here";
+                e.returnValue = dialogText;
+                return dialogText;
+            };
+
+            window.addEventListener("beforeunload", onbeforeunload);
+        }
+    };
+
+    return {
+        init: init
+    };
+}();
+"use strict";
+
+/*eslint no-unused-vars: 0*/
+
 // function to add "target='_blank'" to all external links
 var externalLinks = function () {
     "use strict";
@@ -487,6 +519,7 @@ var youTubeVideos = function () {
         smallImage.init();
         bannerBackground.init();
         scrollToTop.init();
+        confirmLeave.init();
     });
     // end ready function
 })();

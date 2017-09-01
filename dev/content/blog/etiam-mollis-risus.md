@@ -1,18 +1,18 @@
 ---
 layout: blog-post.html
-title: Consectetur Dapibus Etiam
+title: Etiam Mollis Risus
 description: "Vestibulum id ligula porta felis euismod semper. Curabitur blandit tempus porttitor."
 excerpt: "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam id dolor id nibh ultricies vehicula ut id elit."
 categories:
 tags: tag1, tagA, tag3
-author: author2
+author: [author2, author1]
 featured_blog_post: true
 featured_blog_post_order: 1
 
 comments: true
 image:
-  feature: tn6.jpg
-date: 2017-06-26
+  feature: default.jpg
+date: 2017-03-12
 page_class: blog
 body_classes: blog-post has-sidebar
 ---

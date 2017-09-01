@@ -19,24 +19,10 @@
                         <a href="/{{blogpost.path}}/">{{ blogpost.title}}</a>
                     </li>
                     <li class="blog-date-author">
+                        <div class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</div>
                         <span class="blog-author">
-                            {% if blogpost.author | is_string %}
-                                {% for key, value in authors %}
-                                    {% if key == blogpost.author %}
-                                        {{ value.name }}
-                                    {% endif %}
-                                {% endfor %}
-                            {% endif %}
-
-                            {% if blogpost.author.length > 1 %}
-                                {% for singlePerson in blogpost.author %}
-                                    {% for key, value in authors %}
-                                        {% if key == singlePerson %}
-                                            <span class="multiple-authors">{{ value.name }}</span>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endfor %}
-                            {% endif %}
+                            {% set thisBlogPost = blogpost %}
+                            {% include "author-get-name.html" %}
                         </span>
                     </li>
                     <li class="tags">
@@ -56,104 +42,20 @@
             {% endfor %}
         </ul>
 
-        <div class="blog-pagination">
-            {% if pagination.previous %}
-                <a href="/{{pagination.previous.path}}/">Previous</a>
-            {% else %}
-                <span disabled>Previous</span>
-            {% endif %}
+        {% include "pagination.html" %}
 
-            {% for pageNumber in pagination.pages %}
-                {% if pagination.num === loop.index %}
-                <span class="activePage">{{ loop.index }}</span>
-                {% else %}
-                <a href="/{{ pageNumber.path }}/">{{ loop.index }}</a>
-                {% endif %}
-            {% endfor %}
-
-            {% if pagination.next %}
-                <a href="/{{pagination.next.path}}/">Next</a>
-            {% else %}
-                <span disabled>Next</span>
-            {% endif %}
-        </div>
     </section>
 {% endblock %}
 
 {% block sidebar %}
     <aside class="sidebar">
         <h3>Featured Posts</h3>
-
-        <ul class="list-unstyled list-blog-posts">
-            {% for featuredBlogPost in featuredBlogPosts %}
-            <li>
-                <ul class="list-unstyled">
-
-                    <li class="blog-date-author">
-                        <span class="blog-author">
-                            {% if featuredBlogPost.author | is_string %}
-                                {% for key, value in authors %}
-                                    {% if key == featuredBlogPost.author %}
-                                        {{ value.name }}
-                                    {% endif %}
-                                {% endfor %}
-                            {% endif %}
-
-                            {% if featuredBlogPost.author.length > 1 %}
-                                {% for singlePerson in featuredBlogPost.author %}
-                                    {% for key, value in authors %}
-                                        {% if key == singlePerson %}
-                                            <span class="multiple-authors">{{ value.name }}</span>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endfor %}
-                            {% endif %}
-                        </span>
-                    </li>
-                    <li class="blog-post-title"><a href="/{{ featuredBlogPost.path }}/">{{ featuredBlogPost.title }}</a></li>
-                    <li><a class="read-more-link" href="/{{ featuredBlogPost.path }}/">Read More <span>&raquo;</span></a></li>
-
-                </ul>
-            </li>
-            {% endfor %}
-        </ul>
+        {% set blogPosts = featuredBlogPosts %}
+        {% include "post-list.html" %}
 
         <h3>Recent Posts</h3>
-        <ul class="list-unstyled list-blog-posts">
-            {% for latestBlogPost in latestBlogPosts %}
-            <li>
-                <ul class="list-unstyled">
-
-                    <li class="blog-date-author">
-                        <span class="blog-author">
-                            {% if latestBlogPost.author | is_string %}
-                                {% for key, value in authors %}
-                                    {% if key == latestBlogPost.author %}
-                                        {{ value.name }}
-                                    {% endif %}
-                                {% endfor %}
-                            {% endif %}
-
-                            {% if latestBlogPost.author.length > 1 %}
-                                {% for singlePerson in latestBlogPost.author %}
-                                    {% for key, value in authors %}
-                                        {% if key == singlePerson %}
-                                            <span class="multiple-authors">{{ value.name }}</span>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endfor %}
-                            {% endif %}
-                        </span>
-                    </li>
-                    <li class="blog-post-title"><a href="/{{ latestBlogPost.path }}/">{{ latestBlogPost.title }}</a></li>
-                    <li><a class="read-more-link" href="/{{ latestBlogPost.path }}/">Read More <span>&raquo;</span></a></li>
-
-                </ul>
-            </li>
-            {% endfor %}
-        </ul>
-
-
+        {% set blogPosts = latestBlogPosts %}
+        {% include "post-list.html" %}
 
         <h3>Tags</h3>
         {% for tagName, tagData in tags %}
