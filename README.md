@@ -46,7 +46,7 @@ Assets are located in `dev/sources/assets`. The favicon and redirects file are l
  After updating the icons change icon font path to   `$icomoon-font-path: "../fonts" !default;`   in `dev/styles/icons/variables`
 
 ### Drafts
-Pages not yet ready for publishing can be ignored by the build process by adding `draft: true` to the page from matter.
+Pages not yet ready for publishing can be ignored by the build process by adding `draft: true` to the page frontmatter.
 
 
 ### Providing a RSS feed of blogposts

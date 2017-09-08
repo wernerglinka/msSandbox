@@ -301,4 +301,44 @@ gulp.task('default', ['buildDev'], function () {
   ], ['refresh']);
 });
 
+gulp.task('production', function (cb) {
+  sequence([
+    'vendorScripts',
+    'productionScripts',
+    'productionStyles'
+    ],
+    'metalsmith',
+    cb
+  )
+});
 
+gulp.task('productionScripts', function () {
+    return gulp.src(path.join(__dirname, scriptPath, '**/*.js'))
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(order([
+          path.join(__dirname, scriptPath, 'ready.js'),
+          path.join(__dirname, scriptPath, 'modules/touchClick.js'),
+          path.join(__dirname, scriptPath, 'modules/hoverMenu.js'),
+          path.join(__dirname, scriptPath, 'modules/mobileMenu.js'),
+          path.join(__dirname, scriptPath, 'modules/youTubeVideos.js'),
+          path.join(__dirname, scriptPath, 'modules/lineNumbers.js'),
+          path.join(__dirname, scriptPath, 'modules/externalLinks.js'),
+          path.join(__dirname, scriptPath, 'modules/modifyMarketoForm.js'),
+          path.join(__dirname, scriptPath, 'modules/scrollHomeNav.js'),
+          path.join(__dirname, scriptPath, 'modules/smallImage.js'),
+          path.join(__dirname, scriptPath, 'modules/bannerBackground.js'),
+          path.join(__dirname, scriptPath, 'modules/scrollToTop.js')
+        ]))
+        .pipe(concat('main.js'))
+        .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/scripts')));
+});
+
+// compile style sheet for development
+gulp.task('productionStyles', function() {
+    return gulp.src(path.join(__dirname, stylePath, 'main.scss'))
+        .pipe(sass({style: 'expanded'}))
+        .pipe(autoprefixer('last 2 version'))
+        .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/styles')));
+});
