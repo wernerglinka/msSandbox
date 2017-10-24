@@ -1,5 +1,8 @@
 # Metalsmith Sandbox
 
+Metalsmith sandbox to develop, experiment and just play with the metal. Live version of this site is [here](http://mssandbox.netlify.com/)
+
+
 ## Installing dev site
 ```bash
 npm install
