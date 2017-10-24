@@ -10,6 +10,7 @@
 
         <ul class="bloglist list-unstyled">
             {% for blogpost in pagination.files %}
+
             <li>
                 <div class="featured-image">
                     <a href="/{{blogpost.path}}/"><img src="/assets/images/blog/thumbnails/{{ blogpost.image.feature }}" alt="" /></a>
@@ -19,7 +20,7 @@
                         <a href="/{{blogpost.path}}/">{{ blogpost.title}}</a>
                     </li>
                     <li class="blog-date-author">
-                        <div class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</div>
+                        <div class="blog-publish-date">{{ blogpost.date | date("MMMM D, YYYY")  }}</div>
                         <span class="blog-author">
                             {% set thisBlogPost = blogpost %}
                             {% include "author-get-name.html" %}

@@ -7,7 +7,7 @@ categories:
 tags: tag1, tagA, tag3
 author: [author2, author1]
 featured_blog_post: true
-featured_blog_post_order: 1
+featured_blog_post_order: 2
 
 comments: true
 image:

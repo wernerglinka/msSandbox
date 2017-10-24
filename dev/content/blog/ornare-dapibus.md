@@ -7,12 +7,12 @@ categories:
 tags: tag1, tagA, tag3
 author: [author2, author1]
 featured_blog_post: true
-featured_blog_post_order: 1
+featured_blog_post_order: 3
 
 comments: true
 image:
   feature: default.jpg
-date: 2017-06-26
+date: 2017-06-21
 page_class: blog
 body_classes: blog-post has-sidebar
 ---

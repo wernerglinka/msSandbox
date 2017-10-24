@@ -1,0 +1,116 @@
+{% macro other_posts_by_author(author, allSortedBlogPosts, this_title) %}
+
+    <ul class="list-unstyled list-blog-posts">
+        {% for thisBlogPost in allSortedBlogPosts %}
+
+            {# case: this blogpost is by a single author AND the post in allSortedBlogPosts is by a single author AND the author of both are the same #}
+
+            {% if ( thisBlogPost.author | is_string ) and ( author | is_string ) and ( thisBlogPost.author === author ) %}
+                {% if not (thisBlogPost.title === this_title) %}
+                    <li>
+                        <ul class="list-unstyled">
+                            <li class="blog-post-title">{{ thisBlogPost.title }}</li>
+                            <li class="blog-date-author">
+                                <li class="author-name">{{ thisBlogPost.author }}</li>
+                                <span class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</span>,
+                            </li>
+                            <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+            {% endif %}
+
+
+            {# case: this blogpost is by a single author AND the post in allSortedBlogPosts is by multiple authors AND this author is among them #}
+
+            {% if ( thisBlogPost.author | is_array ) and ( author | is_string ) %}
+                {% for thisAuthor in thisBlogPost.author %}
+                    {% if thisAuthor === author %}
+                        {% if not (thisBlogPost.title === this_title) %}
+                            <li>
+                                <ul class="list-unstyled">
+                                    <li class="blog-post-title">{{ thisBlogPost.title }}</li>
+                                    <li class="blog-date-author">
+                                        <li class="author-name">
+                                            {% for name in thisBlogPost.author %}
+                                                <span class="multiple-authors">{{ name }}</span>
+                                            {% endfor %}
+                                        </li>
+                                        <span class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</span>,
+                                    </li>
+
+                                    <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+
+            {# case: this blogpost is by multiple authors AND the post in allSortedBlogPosts is by a single author AND the author of the post in allSortedBlogPosts is among the authors of this blogpost #}
+
+            {% if ( thisBlogPost.author | is_string) and ( author | is_array) %}
+                {% for thisAuthor in author %}
+                    {% if thisAuthor === thisBlogPost.author %}
+                        {% if not (thisBlogPost.title === this_title) %}
+                            <li>
+                                <ul class="list-unstyled">
+                                    <li class="blog-post-title">{{ thisBlogPost.title }}</li>
+                                    <li class="blog-date-author">
+                                        <li class="author-name">
+                                            <span class="multiple-authors">{{ thisBlogPost.author }}</span>
+                                        </li>
+                                        <span class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</span>,
+                                    </li>
+                                    <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+
+            {# case: this blogpost is by multiple authors AND the post in allSortedBlogPosts is by multiple authors AND an author of the post in allSortedBlogPosts is among the authors of this blogpost #}
+
+            {% if ( thisBlogPost.author | is_array ) and ( author | is_array ) %}
+                {% set match = false %}
+                {% for thisAuthor in author %}
+                    {% for thisListAuthor in thisBlogPost.author %}
+                        {% if thisAuthor === thisListAuthor %}
+
+                            {# if we find the current blog post we pass #}
+
+                            {% if not (thisBlogPost.title === this_title) %}
+
+                                {# we loop through all listed blog posts for every author of this blog post.    #}
+                                {# There might be other posts from this set of authors. In case we have already #}
+                                {# found a blog post for an author we do not want to list it again.             #}
+
+                                {% if match === false %}
+                                    {% set match = true %}
+                                    <li>
+                                        <ul class="list-unstyled">
+                                            <li class="blog-post-title">{{ thisBlogPost.title }}</li>
+                                            <li class="blog-date-author">
+                                                <li class="author-name">
+                                                    {% for name in thisBlogPost.author %}
+                                                        <span class="multiple-authors">{{ name }}</span>
+                                                    {% endfor %}
+                                                </li>
+                                                <span class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</span>,
+                                            </li>
+                                            <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+
+        {% endfor %}
+    </ul>
+{% endmacro %}

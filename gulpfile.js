@@ -25,8 +25,12 @@ var frontmatter = require('metalsmith-matters');
 var highlightCode = require('metalsmith-prism');
 var writemetadata = require('metalsmith-writemetadata');
 var renamer = require('metalsmith-renamer');
-var recentPosts = require('./local_modules/metalsmith-recent-blog-posts');
+var postsList = require('./local_modules/metalsmith-blog-post-lists');
 var marked = require('marked');
+var ignore = require('metalsmith-ignore');
+
+//var mdPartials = require('./local_modules/metalsmith-markdown-partials');
+var mdPartials = require('metalsmith-markdown-partials');
 
 // path variables
 var contentPath = "./dev/content";
@@ -58,6 +62,9 @@ nunjucks
     .addFilter('is_string', function(obj) {
       return typeof obj == 'string';
     })
+    .addFilter('is_array', function(obj) {
+      return Array.isArray(obj);
+    })
     .addFilter('date', dateFilter)
     // replaces a file extension with a "/". Needed in generating custom XML feeds
     .addFilter('makePermalink', function(obj) {
@@ -85,9 +92,9 @@ function setupMetalsmith(callback) {
         .clean(true)
 
         // check if this works as expected !!!!!!!!!!!
-        .use(frontmatter({
-            namespace: 'page'
-        }))
+        //.use(frontmatter({
+        //    namespace: 'page'
+        //}))
 
         .use(metadata({
           "site": "data/site.yml",
@@ -97,6 +104,15 @@ function setupMetalsmith(callback) {
         }))
 
         .use(drafts())
+
+        // ignore the partial markdown files in library
+        .use(ignore([
+            'library/*'
+            ]))
+
+        //.use(mdPartials({"libraryPath": contentPath + '/library/'}))
+        // option default is ./dev/content/library/
+        .use(mdPartials())
 
         .use(tags({
             "handle": "tags",
@@ -137,9 +153,9 @@ function setupMetalsmith(callback) {
             }
         }))
 
-        .use(recentPosts({
+        .use(postsList({
           "latest_quantity": 2, // length of the recent posts list
-          "featured_quatity": 2 // length of the featured posts list
+          "featured_quantity": 2 // length of the featured posts list
         }))
 
         .use(inPlace({
@@ -301,7 +317,7 @@ gulp.task('default', ['buildDev'], function () {
   ], ['refresh']);
 });
 
-gulp.task('production', function (cb) {
+gulp.task('buildProd', function (cb) {
   sequence([
     'vendorScripts',
     'productionScripts',
@@ -338,7 +354,7 @@ gulp.task('productionScripts', function () {
 // compile style sheet for development
 gulp.task('productionStyles', function() {
     return gulp.src(path.join(__dirname, stylePath, 'main.scss'))
-        .pipe(sass({style: 'expanded'}))
+        .pipe(sass({style: 'compressed'}))
         .pipe(autoprefixer('last 2 version'))
         .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/styles')));
 });
