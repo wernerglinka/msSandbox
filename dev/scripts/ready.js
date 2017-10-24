@@ -1,6 +1,22 @@
 /* global jQuery, window, touchClick, hoverMenu, mobileMenu, youTubeVideos, lineNumbers, externalLinks,
-   modifyMarketoForm, scrollHomeNav, smallImage, bannerBackground, scrollToTop, TOP_MESSAGE_HEIGHT */
+   modifyMarketoForm, scrollHomeNav, smallImage, bannerBackground, scrollToTop, confirmLeave, modalVideos, OP_MESSAGE_HEIGHT */
 /*eslint no-unused-vars: 0*/
+
+// custom event for api loaded
+var videoAPIReady = new Event("videoAPIReady");
+
+// load the youTube video JS api
+// https://developers.google.com/youtube/iframe_api_reference
+// This code loads the IFrame Player API code asynchronously.
+var tag = document.createElement("script");
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName("script")[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+function onYouTubeIframeAPIReady() {
+    window.dispatchEvent(videoAPIReady);
+}
+
 
 (function () {
     //the document ready function
@@ -17,6 +33,7 @@
         bannerBackground.init();
         scrollToTop.init();
         confirmLeave.init();
+        modalVideos.init();
     });
     // end ready function
 })();

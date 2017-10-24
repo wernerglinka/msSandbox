@@ -16,7 +16,7 @@
                     {% include "author-show-single.html" %}
                 {% endif %}
 
-                {% if author.length > 1 %}
+                {% if author | is_array %}
                     {% include "author-show-multiple.html" %}
                 {% endif %}
             </div>

@@ -264,7 +264,8 @@ gulp.task('scripts', function () {
           path.join(__dirname, scriptPath, 'modules/scrollHomeNav.js'),
           path.join(__dirname, scriptPath, 'modules/smallImage.js'),
           path.join(__dirname, scriptPath, 'modules/bannerBackground.js'),
-          path.join(__dirname, scriptPath, 'modules/scrollToTop.js')
+          path.join(__dirname, scriptPath, 'modules/scrollToTop.js'),
+          path.join(__dirname, scriptPath, 'modules/modalVideos.js')
         ]))
         .pipe(concat('main.js'))
         .pipe(sourcemaps.write('.'))

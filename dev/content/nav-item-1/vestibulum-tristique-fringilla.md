@@ -15,6 +15,10 @@ has_footer_promo: false
 ## Commodo Ullamcorper Consectetur
 Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nulla vitae elit libero, a pharetra augue. Vestibulum id ligula porta felis euismod semper. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
 
+**Videos may be played inline or in an overlay. Here is an example of a video played in an overlay:**
+
+<a class="modal-video" href="https://youtu.be/30sorJ54rdM" data-video-id="30sorJ54rdM"  data-video-attr="">Test Video Link<i class="icon icon-play inline-video-link"></i></a>
+
 Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas sed diam eget risus varius blandit sit amet non magna. Donec id elit non mi porta gravida at eget metus. Donec sed odio dui.
 
 <div class="youtube-video" data-video-tn="/assets/images/video-tns/video1.jpg" data-video-id="-sfRVyDHT30" data-additional-attributes="?enablejsapi=1&rel=0"></div>
