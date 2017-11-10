@@ -62,9 +62,10 @@
         {# list latest posts. number of posts is defined with 'recent_quantiy" option of the recentPosts plugin in gulp.js #}
 
         <div class="post-lists">
+            {% import "post-list.html" as lists %}
+
             <h3>Recent Posts</h3>
-            {% set blogPosts = latestBlogPosts %}
-            {% include "post-list.html" %}
+            {{ lists.blockPosts(latestBlogPosts) }}
 
             {# list all posts by this/these author/s #}
 

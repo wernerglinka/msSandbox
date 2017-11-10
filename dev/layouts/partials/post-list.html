@@ -1,5 +1,6 @@
+{% macro blockPosts(posts) %}
 <ul class="list-unstyled list-blog-posts">
-    {% for thisBlogPost in blogPosts %}
+    {% for thisBlogPost in posts %}
     <li>
         <ul class="list-unstyled">
             <li class="blog-date-author">
@@ -14,3 +15,4 @@
     </li>
     {% endfor %}
 </ul>
+{% endmacro %}

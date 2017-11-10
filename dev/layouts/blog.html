@@ -50,13 +50,14 @@
 
 {% block sidebar %}
     <aside class="sidebar">
+
+        {% import "post-list.html" as lists %}
+
         <h3>Featured Posts</h3>
-        {% set blogPosts = featuredBlogPosts %}
-        {% include "post-list.html" %}
+        {{ lists.blockPosts(featuredBlogPosts) }}
 
         <h3>Recent Posts</h3>
-        {% set blogPosts = latestBlogPosts %}
-        {% include "post-list.html" %}
+        {{ lists.blockPosts(latestBlogPosts) }}
 
         <h3>Tags</h3>
         {% for tagName, tagData in tags %}

@@ -158,8 +158,11 @@ function setupMetalsmith(callback) {
           "featured_quantity": 2 // length of the featured posts list
         }))
 
+        // in-place enables import code sections ??
         .use(inPlace({
-            "pattern": "**/*.html"
+            "engine": "nunjucks",
+            "directory": "./dev/layouts",
+            "partials": "./dev/layouts/partials"
         }))
 
         .use(markdownSections({

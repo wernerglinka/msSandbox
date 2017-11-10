@@ -8,9 +8,17 @@ body_classes: magna-sit
 #page promotions
 has_top_message: true
 has_footer_promo: false
+
+test_dingens: "yay, here I am"
 ---
 
 ## Commodo Ullamcorper Consectetur
+
+Here is where the test dingens goes:
+
+** {{ test_dingens }} **
+
+
 Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nulla vitae elit libero, a pharetra augue. Vestibulum id ligula porta felis euismod semper. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
 
 Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas sed diam eget risus varius blandit sit amet non magna. Donec id elit non mi porta gravida at eget metus. Donec sed odio dui.
