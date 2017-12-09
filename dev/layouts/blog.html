@@ -65,8 +65,12 @@
 
         <h3>Tags</h3>
         <div class="list-wrapper">
-        {% for tagName, tagData in tags %}
-            <a class="tag-link" href="/topics/{{ tagData.urlSafe}}/">{{ tagName }}</a>
+        {% for tagName, tagData in tagCloud %}
+        {% if tag === tagName %}
+        <a class="tag-link active" href="/{{ tagData.path }}/">{{ tagName }} ({{ tagData.occurences }})</a>
+        {% else %}
+        <a class="tag-link" href="/{{ tagData.path }}/">{{ tagName }} ({{ tagData.occurences }})</a>
+        {% endif %}
         {% endfor %}
         </div>
 

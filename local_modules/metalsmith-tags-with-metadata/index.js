@@ -1,3 +1,4 @@
+/* eslint-disable*/
 var slug = require('slug');
 
 /**
@@ -11,6 +12,8 @@ function plugin(opts) {
    * @type {Object}
    */
   var tagList = {};
+  var tempTagCloud = [];
+  var tagCloud = [];
 
   opts = opts || {};
   opts.path = opts.path || 'tags/:tag/index.html';
@@ -104,6 +107,16 @@ function plugin(opts) {
           // Save url safe formatted and display versions of tag data
           data[opts.handle].push({ name: tag, slug: safeTag(tag)});
 
+          // build the tag cloud
+          if ( !tempTagCloud[tag] ) {
+            tempTagCloud[tag] = [];
+            tempTagCloud[tag]['tagName'] = tag;
+            tempTagCloud[tag]['occurences'] = 1;
+            tempTagCloud[tag]['path'] = 'topics/' + safeTag(tag);
+          } else {
+            tempTagCloud[tag]['occurences']++;
+          }
+
           // Add each tag to our overall tagList and initialize array if it
           // doesn't exist.
           if (!tagList[tag]) {
@@ -117,11 +130,22 @@ function plugin(opts) {
       }
     }
 
+    // turn tempTagCloud into a real array and sort
+    for (var key in tempTagCloud) tagCloud.push([key, tempTagCloud[key]]);
+    tagCloud.sort(function(a, b) {
+        a = a[0];
+        b = b[0];
+        return a < b ? -1 : (a > b ? 1 : 0);
+    });
+
     // Add to metalsmith.metadata for access outside of the tag files.
     if (!opts.skipMetadata) {
       var metadata = metalsmith.metadata();
       metadata[opts.metadataKey] = metadata[opts.metadataKey] || {};
     }
+
+    // add the tagCloud to the metadata
+    metadata['tagCloud'] = tagCloud;
 
     for (var tag in tagList) {
       // Map the array of tagList names back to the actual data object.
