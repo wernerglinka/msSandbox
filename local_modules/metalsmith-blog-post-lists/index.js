@@ -13,9 +13,6 @@ function plugin(opts){
         var featuredBlogPosts = [];
         var allSortedBlogPosts = [];
         var temp = [];
-
-        console.log(opts);
-
         var options = [];
         options.latest_quantity = opts.latest_quantity === 'undefined' ? 4 : opts.latest_quantity;
         options.featured_blog_post_sort_order = opts.featured_blog_post_sort_order === 'undefinend' ? "asc" : opts.featured_blog_post_sort_order;

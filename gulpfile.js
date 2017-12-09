@@ -9,6 +9,7 @@ var browserSync = require('browser-sync').create();
 var Metalsmith = require('metalsmith');
 var drafts = require('metalsmith-drafts');
 var tags = require('./local_modules/metalsmith-tags-with-metadata');
+var categories = require('./local_modules/metalsmith-categories-with-metadata');
 var markdownSections = require('metalsmith-markdown-sections');
 var excerpts = require('metalsmith-excerpts');
 var permalinks = require('metalsmith-permalinks');
@@ -31,6 +32,8 @@ var ignore = require('metalsmith-ignore');
 
 //var mdPartials = require('./local_modules/metalsmith-markdown-partials');
 var mdPartials = require('metalsmith-markdown-partials');
+
+var allPosts = require('./local_modules/metalsmith-all-blogs-list');
 
 // path variables
 var contentPath = "./dev/content";
@@ -81,6 +84,9 @@ nunjucks
     // strips all html from a string
     .addFilter('stripHTML', function (htmlString) {
       return htmlString.replace(/<[^>]+>/g, '');
+    })
+    .addFilter('spaceToDash', function (string) {
+      return string.replace(/\s+/g, "-");
     });
 
 // metalsmith
@@ -114,16 +120,44 @@ function setupMetalsmith(callback) {
         // option default is ./dev/content/library/
         .use(mdPartials())
 
-        .use(tags({
-            "handle": "tags",
-            "path": "topics/:tag.html",
+        .use(categories({
+            "handle": "categories",
+            "path": "blog/categories/:category.html",
+            "pathPage": "blog/categories/:category/:num/index.html",
+            "perPage": 5,
             "layout": "blog.html",
             "sortBy": "date",
             "reverse": true,
             "skipMetadata": false,
             "addMetadata": {
-              "body_classes": "blog has-sidebar is-tag-page",
-              "is_tag_page": true
+              "body_classes": "blog has-sidebar",
+              "is_category_page": true,
+              "has_top_message": true,
+              "has_navigation": true,
+              "has_footer_navigation": true,
+              "has_footer_promo": true
+            },
+            "slug": {
+              "mode": "rfc3986"
+            }
+        }))
+
+        .use(tags({
+            "handle": "tags",
+            "path": "topics/:tag.html",
+            "pathPage": "topics/:tag/:num/index.html",
+            "perPage": 5,
+            "layout": "blog.html",
+            "sortBy": "date",
+            "reverse": true,
+            "skipMetadata": false,
+            "addMetadata": {
+              "body_classes": "blog has-sidebar",
+              "is_tag_page": true,
+              "has_top_message": true,
+              "has_navigation": true,
+              "has_footer_navigation": true,
+              "has_footer_promo": true
             },
             "slug": {
               "mode": "rfc3986"
@@ -152,6 +186,9 @@ function setupMetalsmith(callback) {
                 }
             }
         }))
+
+        // creates the allBlogPost list that can be used to build a blogs by year list
+        .use(allPosts())
 
         .use(postsList({
           "latest_quantity": 2, // length of the recent posts list

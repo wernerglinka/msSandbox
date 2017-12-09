@@ -31,9 +31,22 @@
   linkClass: nav-item-3-link
 
 - title: Blog
-  isLink: true
+  isLink: false
   url: /blog/1/
-  linkClass: blog-link has-bottom-border
+  linkClass: blog-link dropdown
+  submenu:
+    - title: All Blog Posts
+      url: /blog/1/
+      link-class: all-blog-posts
+    - title: Category One
+      url: /blog/categories/category-one
+      link-class: blog-category-category-one
+    - title: Category Two
+      url: /blog/categories/category-two
+      link-class: blog-category-category-two
+    - title: Category three
+      url: /blog/categories/category-three
+      link-class: blog-category-category-three
 
 - title: Contact
   isLink: true

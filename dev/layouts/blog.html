@@ -5,8 +5,12 @@
         {% if title %}
             <h1 class="page-title">{{ title }}</h1>
         {% elseif tag %}
-            <h1 class="page-title">{{ tag }}</h1>
+            <h1 class="page-title tag-name">Tag: {{ tag }}</h1>
+        {% elseif category %}
+            <h1 class="page-title category-name">Blog Category: {{ category }}</h1>
         {% endif %}
+
+        {% include "blog-categories-list.html" %}
 
         <ul class="bloglist list-unstyled">
             {% for blogpost in pagination.files %}
@@ -60,8 +64,17 @@
         {{ lists.blockPosts(latestBlogPosts) }}
 
         <h3>Tags</h3>
+        <div class="list-wrapper">
         {% for tagName, tagData in tags %}
             <a class="tag-link" href="/topics/{{ tagData.urlSafe}}/">{{ tagName }}</a>
         {% endfor %}
+        </div>
+
+        <h3>All Blogs by Year</h3>
+        <div class="listwrapper">
+        {% import "blog-list-by-year.html" as allPosts %}
+        {{ allPosts.allBlockPosts(allBlogPosts, authors) }}
+        </div>
+
     </aside>
 {% endblock %}

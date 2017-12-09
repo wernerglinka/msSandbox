@@ -4,7 +4,7 @@
     {% include "head.html" %}
   </head>
 
-  <body class="{{ body_classes }} {% if sidebarContent %}with-sidebar{% endif %}">
+  <body class="{{ body_classes }} {% if sidebarContent %}has-sidebar{% endif %} {% if category %}blog-category-{{ category | spaceToDash }}{% endif %} {% if tag %}is-tag-page{% endif %}">
     {% include "browser-upgrade.html" %}
 
     {% block top_message %}

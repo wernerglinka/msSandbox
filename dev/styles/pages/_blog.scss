@@ -1,4 +1,33 @@
 // blog landing pages
+
+.blog-categories-list {
+    padding: 0;
+
+    li {
+        list-style: none;
+        display: inline-block;
+        padding: 0 20px;
+
+        &:first-child {
+            padding-left: 0;
+        }
+
+        a {
+            text-transform: capitalize;
+        }
+
+        &.active a {
+            color: red;
+            font-weight: bold;
+
+            &:hover {
+                text-decoration: none;
+                cursor: default;
+            }
+        }
+    }
+}
+
 .bloglist > li {
     display: flex;
 
@@ -248,6 +277,28 @@ hr {
     }
 }
 
+.list-wrapper {
+    margin-bottom: 50px;
+}
 
+.annual-blog-post-list {
+    margin: 0 0 0 20px;
+    padding: 0;
 
+    li {
+        list-style: none;
+        margin-bottom: 20px;
 
+        .blog-post-title {
+            font-size: 16px;
+            color: #333;
+
+            & + p,
+            & + p + p {
+                font-size: 14px;
+                font-style: italic;
+                margin: 0;
+            }
+        }
+    }
+}

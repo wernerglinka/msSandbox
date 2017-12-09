@@ -1,26 +1,23 @@
 ---
 layout: blog-post.html
-title: Justo Cursus
+
+# meta data
+title: Zuam Vulputate
 description: "Vestibulum id ligula porta felis euismod semper. Curabitur blandit tempus porttitor."
 excerpt: "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam id dolor id nibh ultricies vehicula ut id elit."
-categories:
-tags: tag5, tag2, tag3
-author: [author3, author1]
+
+# page properties
+blog_title: Zuam Vulputate
+categories: category three
+tags: tagy
+author: author3
 comments: true
 image:
-  feature: tn5.jpg
-date: 2017-08-31
+  feature: tn9.jpg
+date: 2016-07-05
 page_class: blog
 body_classes: blog-post has-sidebar
 ---
-
-## Sollicitudin Vulputate Quam Ipsum
-Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Aenean lacinia bibendum nulla sed consectetur. Maecenas faucibus mollis interdum.
-
-## Sollicitudin Cras Etiam Tristique
-Nulla vitae elit libero, a pharetra augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas faucibus mollis interdum. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-
-Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
 
 ## Purus Mattis
 Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.

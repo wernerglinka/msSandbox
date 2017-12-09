@@ -1,18 +1,20 @@
 ---
 layout: blog-post.html
-title: Ornare Dapibus
+
+# meta data
+title: Maecenas sed diam
 description: "Vestibulum id ligula porta felis euismod semper. Curabitur blandit tempus porttitor."
 excerpt: "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam id dolor id nibh ultricies vehicula ut id elit."
-categories:
-tags: tag1, tagA, tag3
-author: [author2, author1]
-featured_blog_post: true
-featured_blog_post_order: 3
 
+# page properties
+blog_title: Maecenas sed diam
+categories: category three
+tags: tag1, tag2, tag3
+author: author3
 comments: true
 image:
-  feature: default.jpg
-date: 2017-06-21
+  feature: tn1.jpg
+date: 2017-09-01
 page_class: blog
 body_classes: blog-post has-sidebar
 ---

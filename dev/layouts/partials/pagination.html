@@ -1,21 +1,19 @@
 <div class="content-pagination">
+    {% if pagination.previous or pagination.next %}
     {% if pagination.previous %}
-        <a href="/{{pagination.previous.path}}/">Previous</a>
-    {% else %}
-        <span disabled>Previous</span>
+      <a href="/{{pagination.previous.path}}/">Previous</a>
     {% endif %}
 
     {% for pageNumber in pagination.pages %}
-        {% if pagination.num === loop.index %}
+      {% if pagination.num === loop.index %}
         <span class="activePage">{{ loop.index }}</span>
-        {% else %}
+      {% else %}
         <a href="/{{ pageNumber.path }}/">{{ loop.index }}</a>
-        {% endif %}
+      {% endif %}
     {% endfor %}
 
     {% if pagination.next %}
-        <a href="/{{pagination.next.path}}/">Next</a>
-    {% else %}
-        <span disabled>Next</span>
+      <a href="/{{pagination.next.path}}/">Next</a>
     {% endif %}
+  {% endif %}
 </div>
