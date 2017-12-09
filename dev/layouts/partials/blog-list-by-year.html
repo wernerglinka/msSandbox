@@ -4,7 +4,7 @@
         <ul class="annual-blog-post-list">
             {% for info in value %}
                 <li>
-                    <a class="blog-post-title" href="{{ info.path }}">{{ info.blog_title }}</a>
+                    <a class="blog-post-title" href="/{{ info.path }}">{{ info.blog_title }}</a>
                     <p>by <span class="blog-author">
                         {% if info.author | is_string %}
                             {% for key, value in authors %}
