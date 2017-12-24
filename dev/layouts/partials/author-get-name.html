@@ -1,17 +1,19 @@
-{% if thisBlogPost.author | is_string %}
-    {% for key, value in authors %}
-        {% if key == thisBlogPost.author %}
-            {{ value.name }}
-        {% endif %}
-    {% endfor %}
-{% endif %}
-
-{% if thisBlogPost.author.length > 1 %}
-    {% for singlePerson in thisBlogPost.author %}
+ {% macro getAuthor(thisBlogPost, authors) %}
+    {% if thisBlogPost.author | is_string %}
         {% for key, value in authors %}
-            {% if key == singlePerson %}
-                <span class="multiple-authors">{{ value.name }}</span>
+            {% if key == thisBlogPost.author %}
+                {{ value.name }}
             {% endif %}
         {% endfor %}
-    {% endfor %}
-{% endif %}
+    {% endif %}
+
+    {% if thisBlogPost.author.length > 1 %}
+        {% for singlePerson in thisBlogPost.author %}
+            {% for key, value in authors %}
+                {% if key == singlePerson %}
+                    <span class="multiple-authors">{{ value.name }}</span>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+{% endmacro %}

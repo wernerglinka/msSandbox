@@ -1,31 +1,19 @@
 {% macro allBlockPosts(posts, authors) %}
     {% for key, value in posts %}
-        <h3>{{ key }}</h3>
-        <ul class="annual-blog-post-list">
+        <h3 class="has-info-list">{{ key }}</h3>
+        <ul class="list-unstyled">
             {% for info in value %}
                 <li>
-                    <a class="blog-post-title" href="/{{ info.path }}">{{ info.blog_title }}</a>
-                    <p>by <span class="blog-author">
-                        {% if info.author | is_string %}
-                            {% for key, value in authors %}
-                                {% if key == info.author %}
-                                    {{ value.name }}
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-
-                        {% if info.author.length > 1 %}
-                            {% for singlePerson in info.author %}
-                                {% for key, value in authors %}
-                                    {% if key == singlePerson %}
-                                        <span class="multiple-authors">{{ value.name }}</span>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
-                        {% endif %}
-                        </span>
-                    </p>
-                    <p class="blog-date">on {{ info.date | date("MMMM D, YYYY")}}</p>
+                    <ul class="blog-info list-unstyled">
+                        <li class="blog-post-title"><a href="/{{ info.path }}">{{ info.title }}</a></li>
+                        <li class="blog-date-author">
+                            <div class="blog-publish-date">{{ info.date | date("MMMM D, YYYY")  }}</div>
+                            <div class="blog-author">
+                                {% import "author-get-name.html" as authorsList %}
+                                {{ authorsList.getAuthor(info, authors) }}
+                            </div>
+                        </li>
+                    </ul>
                 </li>
             {% endfor %}
         </ul>

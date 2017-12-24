@@ -8,13 +8,12 @@
             {% if ( thisBlogPost.author | is_string ) and ( author | is_string ) and ( thisBlogPost.author === author ) %}
                 {% if not (thisBlogPost.title === this_title) %}
                     <li>
-                        <ul class="list-unstyled">
-                            <li class="blog-post-title">{{ thisBlogPost.title }}</li>
+                        <ul class="blog-info list-unstyled">
+                            <li class="blog-post-title"><a href="/{{ thisBlogPost.path }}">{{ thisBlogPost.title }}</a></li>
                             <li class="blog-date-author">
-                                <li class="author-name">{{ thisBlogPost.author }}</li>
-                                <span class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</span>,
+                                <div class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</div>
+                                <div class="author-name">{{ thisBlogPost.author }}</div>
                             </li>
-                            <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
                         </ul>
                     </li>
                 {% endif %}
@@ -28,18 +27,16 @@
                     {% if thisAuthor === author %}
                         {% if not (thisBlogPost.title === this_title) %}
                             <li>
-                                <ul class="list-unstyled">
-                                    <li class="blog-post-title">{{ thisBlogPost.title }}</li>
+                                <ul class="blog-info list-unstyled">
+                                    <li class="blog-post-title"><a href="/{{ thisBlogPost.path }}">{{ thisBlogPost.title }}</a></li>
                                     <li class="blog-date-author">
-                                        <li class="author-name">
+                                        <div class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</div>
+                                        <div class="author-name">
                                             {% for name in thisBlogPost.author %}
                                                 <span class="multiple-authors">{{ name }}</span>
                                             {% endfor %}
-                                        </li>
-                                        <span class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</span>,
+                                        </div>
                                     </li>
-
-                                    <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
                                 </ul>
                             </li>
                         {% endif %}
@@ -55,15 +52,14 @@
                     {% if thisAuthor === thisBlogPost.author %}
                         {% if not (thisBlogPost.title === this_title) %}
                             <li>
-                                <ul class="list-unstyled">
-                                    <li class="blog-post-title">{{ thisBlogPost.title }}</li>
+                                <ul class="blog-info list-unstyled">
+                                    <li class="blog-post-title"><a href="/{{ thisBlogPost.path }}">{{ thisBlogPost.title }}</a></li>
                                     <li class="blog-date-author">
-                                        <li class="author-name">
+                                        <div class="author-name">
+                                            <div class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</div>
                                             <span class="multiple-authors">{{ thisBlogPost.author }}</span>
-                                        </li>
-                                        <span class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</span>,
+                                        </div>
                                     </li>
-                                    <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
                                 </ul>
                             </li>
                         {% endif %}
@@ -91,17 +87,16 @@
                                 {% if match === false %}
                                     {% set match = true %}
                                     <li>
-                                        <ul class="list-unstyled">
-                                            <li class="blog-post-title">{{ thisBlogPost.title }}</li>
+                                        <ul class="blog-info list-unstyled">
+                                            <li class="blog-post-title"><a href="/{{ thisBlogPost.path }}">{{ thisBlogPost.title }}</a></li>
                                             <li class="blog-date-author">
-                                                <li class="author-name">
+                                                <div class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</div>
+                                                <div class="author-name">
                                                     {% for name in thisBlogPost.author %}
                                                         <span class="multiple-authors">{{ name }}</span>
                                                     {% endfor %}
-                                                </li>
-                                                <span class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</span>,
+                                                </div>
                                             </li>
-                                            <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
                                         </ul>
                                     </li>
                                 {% endif %}

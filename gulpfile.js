@@ -26,14 +26,15 @@ var frontmatter = require('metalsmith-matters');
 var highlightCode = require('metalsmith-prism');
 var writemetadata = require('metalsmith-writemetadata');
 var renamer = require('metalsmith-renamer');
-var postsList = require('./local_modules/metalsmith-blog-post-lists');
+var postsList = require('./local_modules/metalsmith-blog-helper');
+//var postsList = require('./local_modules/metalsmith-blog-post-lists');
 var marked = require('marked');
 var ignore = require('metalsmith-ignore');
 
 //var mdPartials = require('./local_modules/metalsmith-markdown-partials');
 var mdPartials = require('metalsmith-markdown-partials');
 
-var allPosts = require('./local_modules/metalsmith-all-blogs-list');
+//var allPosts = require('./local_modules/metalsmith-all-blogs-list');
 
 // path variables
 var contentPath = "./dev/content";
@@ -186,14 +187,17 @@ function setupMetalsmith(callback) {
                 }
             }
         }))
-
+/*
         // creates the allBlogPost list that can be used to build a blogs by year list
         .use(allPosts())
-
+*/
         .use(postsList({
           "latest_quantity": 2, // length of the recent posts list
           "featured_quantity": 2 // length of the featured posts list
         }))
+
+
+
 
         // in-place enables import code sections ??
         .use(inPlace({

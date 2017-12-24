@@ -65,7 +65,7 @@
             {% import "post-list.html" as lists %}
 
             <h3>Recent Posts</h3>
-            {{ lists.blockPosts(latestBlogPosts) }}
+            {{ lists.blockPosts(latestBlogPosts, authors) }}
 
             {# list all posts by this/these author/s #}
 
@@ -86,7 +86,6 @@
             {% endif %}
 
             {% import "other-blogs-by-author.html" as list_other %}
-
             {{ list_other.other_posts_by_author(author, allSortedBlogPosts, title) }}
 
         </div>

@@ -1,16 +1,16 @@
-{% macro blockPosts(posts) %}
+{% macro blockPosts(posts, authors) %}
 <ul class="list-unstyled list-blog-posts">
     {% for thisBlogPost in posts %}
     <li>
-        <ul class="list-unstyled">
+        <ul class="blog-info list-unstyled">
+            <li class="blog-post-title"><a href="/{{ thisBlogPost.path }}">{{ thisBlogPost.title }}</a></li>
             <li class="blog-date-author">
                 <div class="blog-publish-date">{{ thisBlogPost.date | date("MMMM D, YYYY")  }}</div>
                 <div class="blog-author">
-                    {% include "author-get-name.html" %}
+                    {% import "author-get-name.html" as authorsList %}
+                    {{ authorsList.getAuthor(thisBlogPost, authors) }}
                 </div>
             </li>
-            <li class="blog-post-title">{{ thisBlogPost.title }}</li>
-            <li><a class="read-more-link" href="/{{ thisBlogPost.path }}">Read More <span>&raquo;</span></a></li>
         </ul>
     </li>
     {% endfor %}
