@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: 0*/
 
 // function to attach a class to the body element when the hamburger is touched/clicked
-var mobileMenu = (function () {
+var mobileMenu = (function ($, undefined) {
     "use strict";
 
     let init = function () {
@@ -39,4 +39,4 @@ var mobileMenu = (function () {
     return {
         init: init
     };
-})();
+})(jQuery);

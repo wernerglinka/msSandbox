@@ -2,7 +2,7 @@
 
 // function to add line numbers wrapper to syntax code lines
 // numbers are added via CSS counter
-var lineNumbers = (function () {
+var lineNumbers = (function ($, undefined) {
     "use strict";
     let codeContainers = $("pre.line-numbers");
     let init = function () {
@@ -25,4 +25,4 @@ var lineNumbers = (function () {
     return {
         init: init
     };
-})();
+})(jQuery);

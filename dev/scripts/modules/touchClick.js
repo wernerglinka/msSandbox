@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: 0*/
 
 // function to extend jQuery event >> touchclick for touch and click
-var touchClick = (function () {
+var touchClick = (function ($, undefined) {
     "use strict";
     let init = function () {
         let isMobile = false;
@@ -20,4 +20,4 @@ var touchClick = (function () {
     return  {
         init: init
     };
-})();
+})(jQuery);

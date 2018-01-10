@@ -4,7 +4,7 @@
 // function to play youTube videos
 // allows videos to be inserted with minimal html
 // example: "<div class="youtube-video" data-video-tn="<path/to/img>" data-video-id="<youtube id>" data-additional-attributes="?enablejsapi=1&rel=0"></div>
-var youTubeVideos = (function () {
+var youTubeVideos = (function ($, undefined) {
     "use strict";
 
     let allVideos = $(".youtube-video");
@@ -76,4 +76,4 @@ var youTubeVideos = (function () {
     return {
         init: init
     };
-})();
+})(jQuery);

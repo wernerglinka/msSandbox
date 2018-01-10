@@ -2,8 +2,8 @@
 
 /*eslint no-unused-vars: 0*/
 
-// function for change nav background opacaity when banner is scrolled up
-var bannerBackground = function () {
+// function for change nav background opacity when banner is scrolled up
+var bannerBackground = function ($, undefined) {
     "use strict";
 
     var bannerHeight = $(".banner").height();
@@ -25,13 +25,13 @@ var bannerBackground = function () {
     return {
         init: init
     };
-}();
+}(jQuery);
 "use strict";
 
 /*eslint no-unused-vars: 0*/
 
 // function to extend jQuery event >> touchclick for touch and click
-var confirmLeave = function () {
+var confirmLeave = function ($, undefined) {
     "use strict";
 
     var init = function init() {
@@ -57,13 +57,13 @@ var confirmLeave = function () {
     return {
         init: init
     };
-}();
+}(jQuery);
 "use strict";
 
 /*eslint no-unused-vars: 0*/
 
 // function to add "target='_blank'" to all external links
-var externalLinks = function () {
+var externalLinks = function ($, undefined) {
     "use strict";
 
     var allExternalLinks = $('a[href^="http://"], a[href^="https://"]');
@@ -76,13 +76,13 @@ var externalLinks = function () {
     return {
         init: init
     };
-}();
+}(jQuery);
 "use strict";
 
 /*eslint no-unused-vars: 0*/
 
 // function to provide hover behavior for main menu for wide screens
-var hoverMenu = function () {
+var hoverMenu = function ($, undefined) {
     "use strict";
 
     var linkContainer = $(".main-menu").find(".dropdown");
@@ -150,14 +150,14 @@ var hoverMenu = function () {
     return {
         init: init
     };
-}();
+}(jQuery);
 "use strict";
 
 /*eslint no-unused-vars: 0*/
 
 // function to add line numbers wrapper to syntax code lines
 // numbers are added via CSS counter
-var lineNumbers = function () {
+var lineNumbers = function ($, undefined) {
     "use strict";
 
     var codeContainers = $("pre.line-numbers");
@@ -181,13 +181,13 @@ var lineNumbers = function () {
     return {
         init: init
     };
-}();
+}(jQuery);
 "use strict";
 
 /*eslint no-unused-vars: 0*/
 
 // function to attach a class to the body element when the hamburger is touched/clicked
-var mobileMenu = function () {
+var mobileMenu = function ($, undefined) {
     "use strict";
 
     var init = function init() {
@@ -225,13 +225,13 @@ var mobileMenu = function () {
     return {
         init: init
     };
-}();
+}(jQuery);
 "use strict";
 
 /* global YT*/
 /*eslint no-unused-vars: 0*/
 
-var modalVideos = function () {
+var modalVideos = function ($, undefined) {
     "use strict";
 
     var init = function init() {
@@ -303,13 +303,13 @@ var modalVideos = function () {
     return {
         init: init
     };
-}();
+}(jQuery);
 "use strict";
 
 /*eslint no-unused-vars: 0*/
 
 // function to modify and style according to design all Marketo forms
-var modifyMarketoForm = function () {
+var modifyMarketoForm = function ($, undefined) {
     "use strict";
 
     var _removeMarketoCSS = function _removeMarketoCSS() {
@@ -346,7 +346,7 @@ var modifyMarketoForm = function () {
     return {
         init: init
     };
-}();
+}(jQuery);
 "use strict";
 
 /* eslint-disable */
@@ -362,8 +362,9 @@ var numDots = 210,
     minRad = 100,
     radDiff = maxRad - minRad,
     dots = [],
-    pairs = [];
-PI = Math.PI, centerPt = { x: 0, y: 0 };
+    pairs = [],
+    PI = Math.PI,
+    centerPt = { x: 0, y: 0 };
 
 resizeHandler();
 window.onresize = resizeHandler;
@@ -387,7 +388,7 @@ while (n--) {
 
 n = numDots;
 while (n--) {
-  ni = n;
+  var ni = n;
   while (ni--) {
     pairs.push([n, ni]);
   }
@@ -466,7 +467,7 @@ drawPoints();
 /*eslint no-unused-vars: 0*/
 
 // function to make the main nav fixed to top on home page when page is scrolled up
-var scrollHomeNav = function () {
+var scrollHomeNav = function ($, undefined) {
     "use strict";
 
     var hasTopMessage = $(".top-message").length;
@@ -490,13 +491,13 @@ var scrollHomeNav = function () {
     return {
         init: init
     };
-}();
+}(jQuery);
 "use strict";
 
 /*eslint no-unused-vars: 0*/
 
 // the scroll to top function for long pages
-var scrollToTop = function () {
+var scrollToTop = function ($, undefined) {
     var hasToTop = $("#toTop").length;
     var toTop = $("#toTop");
     var TO_TOP_VISIBLE = 400;
@@ -534,13 +535,13 @@ var scrollToTop = function () {
     return {
         init: init
     };
-}();
+}(jQuery);
 "use strict";
 
 /*eslint no-unused-vars: 0*/
 
 // on small screens exchange image for a small one
-var smallImage = function () {
+var smallImage = function ($, undefined) {
     "use strict";
 
     var USE_SMALL_IMAGE = 600;
@@ -583,13 +584,13 @@ var smallImage = function () {
     return {
         init: init
     };
-}();
+}(jQuery);
 "use strict";
 
 /*eslint no-unused-vars: 0*/
 
 // function to extend jQuery event >> touchclick for touch and click
-var touchClick = function () {
+var touchClick = function ($, undefined) {
     "use strict";
 
     var init = function init() {
@@ -609,7 +610,7 @@ var touchClick = function () {
     return {
         init: init
     };
-}();
+}(jQuery);
 "use strict";
 
 /* global YT */
@@ -618,7 +619,7 @@ var touchClick = function () {
 // function to play youTube videos
 // allows videos to be inserted with minimal html
 // example: "<div class="youtube-video" data-video-tn="<path/to/img>" data-video-id="<youtube id>" data-additional-attributes="?enablejsapi=1&rel=0"></div>
-var youTubeVideos = function () {
+var youTubeVideos = function ($, undefined) {
     "use strict";
 
     var allVideos = $(".youtube-video");
@@ -690,7 +691,7 @@ var youTubeVideos = function () {
     return {
         init: init
     };
-}();
+}(jQuery);
 "use strict";
 
 /* global jQuery, window, touchClick, hoverMenu, mobileMenu, youTubeVideos, lineNumbers, externalLinks,

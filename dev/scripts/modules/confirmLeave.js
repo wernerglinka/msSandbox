@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: 0*/
 
 // function to extend jQuery event >> touchclick for touch and click
-var confirmLeave = (function () {
+var confirmLeave = (function ($, undefined) {
     "use strict";
     let init = function () {
         if ($("body").hasClass("confirm-leave")) {
@@ -22,12 +22,9 @@ var confirmLeave = (function () {
             window.addEventListener("beforeunload", onbeforeunload);
 
         }
-
-
-
     };
 
     return  {
         init: init
     };
-})();
+})(jQuery);

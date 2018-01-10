@@ -1,7 +1,7 @@
 /* global YT*/
 /*eslint no-unused-vars: 0*/
 
-var modalVideos = (function () {
+var modalVideos = (function ($, undefined) {
     "use strict";
 
     let init = function () {
@@ -72,9 +72,9 @@ var modalVideos = (function () {
                 });
             });
         });
-    }
+    };
 
     return {
         init: init
     };
-}) ();
+}) (jQuery);

@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: 0*/
 
 // function to provide hover behavior for main menu for wide screens
-var hoverMenu = (function () {
+var hoverMenu = (function ($, undefined) {
     "use strict";
     let linkContainer = $(".main-menu").find(".dropdown");
     let thisDocument = $(document);
@@ -68,4 +68,4 @@ var hoverMenu = (function () {
     return {
         init: init
     };
-})();
+})(jQuery);

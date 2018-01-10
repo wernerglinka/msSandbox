@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: 0*/
 
 // the scroll to top function for long pages
-var scrollToTop = (function () {
+var scrollToTop = (function ($, undefined) {
     let hasToTop = $("#toTop").length;
     let toTop = $("#toTop");
     const TO_TOP_VISIBLE = 400;
@@ -39,4 +39,4 @@ var scrollToTop = (function () {
     return {
         init: init
     };
-})();
+})(jQuery);

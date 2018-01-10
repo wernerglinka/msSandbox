@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: 0*/
 
 // on small screens exchange image for a small one
-var smallImage = (function () {
+var smallImage = (function ($, undefined) {
     "use strict";
     const USE_SMALL_IMAGE = 600;
 
@@ -43,4 +43,4 @@ var smallImage = (function () {
     return {
         init: init
     };
-})();
+})(jQuery);

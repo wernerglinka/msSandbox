@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: 0*/
 
-// function for change nav background opacaity when banner is scrolled up
-var bannerBackground = (function () {
+// function for change nav background opacity when banner is scrolled up
+var bannerBackground = (function ($, undefined) {
     "use strict";
     let bannerHeight = $(".banner").height();
     let hasBanner = $(".has-page-banner").length;
@@ -22,4 +22,4 @@ var bannerBackground = (function () {
     return {
         init: init
     };
-})();
+})(jQuery);

@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: 0*/
 
 // function to make the main nav fixed to top on home page when page is scrolled up
-var scrollHomeNav = (function () {
+var scrollHomeNav = (function ($, undefined) {
     "use strict";
     let hasTopMessage = $(".top-message").length;
     let TopMessageHeight = $(".top-message").height();
@@ -24,4 +24,4 @@ var scrollHomeNav = (function () {
     return {
         init: init
     };
-})();
+})(jQuery);

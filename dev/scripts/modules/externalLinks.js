@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: 0*/
 
 // function to add "target='_blank'" to all external links
-var externalLinks = (function () {
+var externalLinks = (function ($, undefined) {
     "use strict";
     let allExternalLinks = $('a[href^="http://"], a[href^="https://"]');
     let init = function () {
@@ -13,4 +13,4 @@ var externalLinks = (function () {
     return {
         init: init
     };
-})();
+})(jQuery);

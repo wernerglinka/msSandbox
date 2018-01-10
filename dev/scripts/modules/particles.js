@@ -11,7 +11,7 @@ var numDots = 210,
     minRad = 100,
     radDiff = maxRad-minRad,
     dots = [],
-    pairs = [];
+    pairs = [],
     PI = Math.PI,
     centerPt = {x:0, y:0};
 
@@ -38,9 +38,9 @@ while(n--){
 
 //create all pairs
 
-n = numDots
+n = numDots;
 while(n--){
-  ni = n;
+  var ni = n;
   while(ni--){
     pairs.push([n, ni]);
   }

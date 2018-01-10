@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: 0*/
 
 // function to modify and style according to design all Marketo forms
-var modifyMarketoForm = (function () {
+var modifyMarketoForm = (function ($, undefined) {
     "use strict";
     let _removeMarketoCSS = function () {
         // remove the external stylesheets
@@ -17,6 +17,19 @@ var modifyMarketoForm = (function () {
         let marketoForms = $("[id*='mktoForm']");
         marketoForms.each( function () {
             $(this).find("style").remove();
+        });
+        // if needed we can also strip all style attributes from all form elements
+        marketoForms.each(function () {
+            var thisForm = this;
+            if ( thisForm.hasAttribute("style") ) {
+                thisForm.removeAttribute("style");
+            }
+        });
+        marketoForms.find("*").each( function () {
+            var thisElement = this;
+            if ( thisElement.hasAttribute("style") ) {
+                thisElement.removeAttribute("style");
+            }
         });
     };
 
@@ -37,4 +50,4 @@ var modifyMarketoForm = (function () {
     return {
         init: init
     };
-})();
+})(jQuery);
