@@ -1,4 +1,5 @@
-/* eslint capitalized-comments: "always" */
+/*jslint regexp: true, nomen: true*/
+/*global require, process, console, __dirname*/
 
 var path = require('path');
 var argv = require('minimist')(process.argv.slice(2));
@@ -6,7 +7,7 @@ var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
 
 
-var Metalsmith = require('metalsmith');
+var metalsmith = require('metalsmith');
 var drafts = require('metalsmith-drafts');
 var tags = require('./local_modules/metalsmith-tags-with-metadata');
 var categories = require('./local_modules/metalsmith-categories-with-metadata');
@@ -61,39 +62,47 @@ var CaptureTag = require('nunjucks-capture');
 var dateFilter = require('nunjucks-date-filter');
 
 nunjucks
-    .configure(['./dev/layouts','./dev/layouts/partials'], {watch: false, autoescape:false})
+    .configure(['./dev/layouts', './dev/layouts/partials'], {watch: false, autoescape: false})
     .addExtension('CaptureTag', new CaptureTag())
-    .addFilter('is_string', function(obj) {
-      return typeof obj == 'string';
+    .addFilter('is_string', function (obj) {
+        'use strict';
+        return typeof obj === 'string';
     })
-    .addFilter('is_array', function(obj) {
-      return Array.isArray(obj);
+    .addFilter('is_array', function (obj) {
+        'use strict';
+        return Array.isArray(obj);
     })
     .addFilter('date', dateFilter)
     // replaces a file extension with a "/". Needed in generating custom XML feeds
-    .addFilter('makePermalink', function(obj) {
-      return obj.replace(/.md/g , '/');
+    .addFilter('makePermalink', function (obj) {
+        'use strict';
+        return obj.replace(/.md/g, '/');
     })
     // converts a date into a UTC string. Needed for XML dates
     .addFilter('UTCdate', function (date) {
-      return date.toUTCString();
+        'use strict';
+        return date.toUTCString();
     })
     // when building an XML page any text that contains html "<", ">" and "&" characters need to be escaped
     .addFilter('escapeHTML', function (text) {
-      return ( text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+        'use strict';
+        return (text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
     })
     // strips all html from a string
     .addFilter('stripHTML', function (htmlString) {
-      return htmlString.replace(/<[^>]+>/g, '');
+        'use strict';
+        return htmlString.replace(/<[^>]+>/g, '');
     })
     .addFilter('spaceToDash', function (string) {
-      return string.replace(/\s+/g, "-");
+        'use strict';
+        return string.replace(/\s+/g, "-");
     });
 
 // metalsmith
 function setupMetalsmith(callback) {
+    'use strict';
 
-    Metalsmith(process.cwd())
+    metalsmith(process.cwd())
         .source('./dev/content')
         .destination('./build')
         .clean(true)
@@ -104,10 +113,10 @@ function setupMetalsmith(callback) {
         //}))
 
         .use(metadata({
-          "site": "data/site.yml",
-          "authors": "data/authors.yml",
-          "navigation": "data/navigation.yml",
-          "site_promos": "data/site-promos.yml"
+            "site": "data/site.yml",
+            "authors": "data/authors.yml",
+            "navigation": "data/navigation.yml",
+            "site_promos": "data/site-promos.yml"
         }))
 
         .use(drafts())
@@ -115,7 +124,7 @@ function setupMetalsmith(callback) {
         // ignore the partial markdown files in library
         .use(ignore([
             'library/*'
-            ]))
+        ]))
 
         //.use(mdPartials({"libraryPath": contentPath + '/library/'}))
         // option default is ./dev/content/library/
@@ -131,15 +140,15 @@ function setupMetalsmith(callback) {
             "reverse": true,
             "skipMetadata": false,
             "addMetadata": {
-              "body_classes": "blog has-sidebar",
-              "is_category_page": true,
-              "has_top_message": true,
-              "has_navigation": true,
-              "has_footer_navigation": true,
-              "has_footer_promo": true
+                "body_classes": "blog has-sidebar",
+                "is_category_page": true,
+                "has_top_message": true,
+                "has_navigation": true,
+                "has_footer_navigation": true,
+                "has_footer_promo": true
             },
             "slug": {
-              "mode": "rfc3986"
+                "mode": "rfc3986"
             }
         }))
 
@@ -153,37 +162,37 @@ function setupMetalsmith(callback) {
             "reverse": true,
             "skipMetadata": false,
             "addMetadata": {
-              "body_classes": "blog has-sidebar",
-              "is_tag_page": true,
-              "has_top_message": true,
-              "has_navigation": true,
-              "has_footer_navigation": true,
-              "has_footer_promo": true
+                "body_classes": "blog has-sidebar",
+                "is_tag_page": true,
+                "has_top_message": true,
+                "has_navigation": true,
+                "has_footer_navigation": true,
+                "has_footer_promo": true
             },
             "slug": {
-              "mode": "rfc3986"
+                "mode": "rfc3986"
             }
         }))
 
         .use(collections({
             "blog": {
-              "pattern": "blog/**/*.md",
-              "sortBy": "date",
-              "reverse": true
+                "pattern": "blog/**/*.md",
+                "sortBy": "date",
+                "reverse": true
             }
         }))
 
         .use(pagination({
             "collections.blog": {
-              "perPage": 5,
-              "layout": "blog.html",
-              "first": "blog/1/index.html",
-              "path": 'blog/:num/index.html',
-              "pageMetadata": {
-                  "title": "The Blog",
-                  "has_top_message": true,
-                  "has_footer_promo": true,
-                  "body_classes": "blog has-sidebar"
+                "perPage": 5,
+                "layout": "blog.html",
+                "first": "blog/1/index.html",
+                "path": 'blog/:num/index.html',
+                "pageMetadata": {
+                    "title": "The Blog",
+                    "has_top_message": true,
+                    "has_footer_promo": true,
+                    "body_classes": "blog has-sidebar"
                 }
             }
         }))
@@ -192,8 +201,8 @@ function setupMetalsmith(callback) {
         .use(allPosts())
 */
         .use(postsList({
-          "latest_quantity": 2, // length of the recent posts list
-          "featured_quantity": 2 // length of the featured posts list
+            "latest_quantity": 2, // length of the recent posts list
+            "featured_quantity": 2 // length of the featured posts list
         }))
 
 
@@ -221,7 +230,7 @@ function setupMetalsmith(callback) {
         .use(excerpts())
 
         .use(permalinks({
-          "pattern": ":collections/:title"
+            "pattern": ":collections/:title"
         }))
 
         .use(layouts({
@@ -233,12 +242,12 @@ function setupMetalsmith(callback) {
         // we created the xml file using a html template. here we change the
         // file extension to xml
         .use(renamer({
-          htmlToXml: {
-            pattern: 'feeds/*.html',
-            rename: function(name) {
-              return name.replace(/html/ , 'xml')
+            htmlToXml: {
+                pattern: 'feeds/*.html',
+                rename: function (name) {
+                    return name.replace(/html/, 'xml');
+                }
             }
-          }
         }))
 
         .use(assets({
@@ -259,12 +268,12 @@ function setupMetalsmith(callback) {
         }))
 
         .use(writemetadata({
-          pattern: ['**/*.html'],
-          ignorekeys: ['next', 'contents', 'previous'],
-          bufferencoding: 'utf8'
+            pattern: ['**/*.html'],
+            ignorekeys: ['next', 'contents', 'previous'],
+            bufferencoding: 'utf8'
         }))
 
-        .build(function(err) {
+        .build(function (err) {
             if (err) {
                 console.log(err);
                 return callback(err);
@@ -274,42 +283,45 @@ function setupMetalsmith(callback) {
 }
 
 //Gulp tasks
-gulp.task('metalsmith', function(callback) {
+gulp.task('metalsmith', function (callback) {
+    'use strict';
     setupMetalsmith(callback);
 });
 
-gulp.task('vendorScripts', function() {
+gulp.task('vendorScripts', function () {
+    'use strict';
     return gulp.src([
-            "node_modules/jquery/dist/jquery.js",
-            "node_modules/jquery.easing/jquery.easing.js",
-            "node_modules/jquery-hoverintent/jquery.hoverIntent.js",
-            "node_modules/js-breakpoints/breakpoints.js"
-        ])
+        "node_modules/jquery/dist/jquery.js",
+        "node_modules/jquery.easing/jquery.easing.js",
+        "node_modules/jquery-hoverintent/jquery.hoverIntent.js",
+        "node_modules/js-breakpoints/breakpoints.js"
+    ])
         .pipe(concat('vendors.min.js'))
         .pipe(compressJS())
-        .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/scripts')))
+        .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/scripts')));
 });
 
 gulp.task('scripts', function () {
+    'use strict';
     return gulp.src(path.join(__dirname, scriptPath, '**/*.js'))
         .pipe(sourcemaps.init())
         .pipe(babel({
             presets: ['es2015']
         }))
         .pipe(order([
-          path.join(__dirname, scriptPath, 'ready.js'),
-          path.join(__dirname, scriptPath, 'modules/touchClick.js'),
-          path.join(__dirname, scriptPath, 'modules/hoverMenu.js'),
-          path.join(__dirname, scriptPath, 'modules/mobileMenu.js'),
-          path.join(__dirname, scriptPath, 'modules/youTubeVideos.js'),
-          path.join(__dirname, scriptPath, 'modules/lineNumbers.js'),
-          path.join(__dirname, scriptPath, 'modules/externalLinks.js'),
-          path.join(__dirname, scriptPath, 'modules/modifyMarketoForm.js'),
-          path.join(__dirname, scriptPath, 'modules/scrollHomeNav.js'),
-          path.join(__dirname, scriptPath, 'modules/smallImage.js'),
-          path.join(__dirname, scriptPath, 'modules/bannerBackground.js'),
-          path.join(__dirname, scriptPath, 'modules/scrollToTop.js'),
-          path.join(__dirname, scriptPath, 'modules/modalVideos.js')
+            path.join(__dirname, scriptPath, 'ready.js'),
+            path.join(__dirname, scriptPath, 'modules/touchClick.js'),
+            path.join(__dirname, scriptPath, 'modules/hoverMenu.js'),
+            path.join(__dirname, scriptPath, 'modules/mobileMenu.js'),
+            path.join(__dirname, scriptPath, 'modules/youTubeVideos.js'),
+            path.join(__dirname, scriptPath, 'modules/lineNumbers.js'),
+            path.join(__dirname, scriptPath, 'modules/externalLinks.js'),
+            path.join(__dirname, scriptPath, 'modules/modifyMarketoForm.js'),
+            path.join(__dirname, scriptPath, 'modules/scrollHomeNav.js'),
+            path.join(__dirname, scriptPath, 'modules/smallImage.js'),
+            path.join(__dirname, scriptPath, 'modules/bannerBackground.js'),
+            path.join(__dirname, scriptPath, 'modules/scrollToTop.js'),
+            path.join(__dirname, scriptPath, 'modules/modalVideos.js')
         ]))
         .pipe(concat('main.js'))
         .pipe(sourcemaps.write('.'))
@@ -317,7 +329,8 @@ gulp.task('scripts', function () {
 });
 
 // compile style sheet for development
-gulp.task('styles', function() {
+gulp.task('styles', function () {
+    'use strict';
     return gulp.src(path.join(__dirname, stylePath, 'main.scss'))
         .pipe(sourcemaps.init())
         .pipe(sass({style: 'expanded'}))
@@ -327,77 +340,83 @@ gulp.task('styles', function() {
 });
 
 gulp.task('buildDev', function (cb) {
-  sequence([
-    'vendorScripts',
-    'scripts',
-    'styles'
+    'use strict';
+    sequence([
+        'vendorScripts',
+        'scripts',
+        'styles'
     ],
-    'metalsmith',
-    cb
-  )
+        'metalsmith',
+        cb
+        );
 });
 
 // having buildDev as a dependency for the refresh task insures that they are executed before browerSync is run
 // reference: browsersync.io/docs/gulp
 gulp.task('refresh', ['buildDev'], function (done) {
-  browserSync.reload();
-  done();
-})
+    'use strict';
+    browserSync.reload();
+    done();
+});
 
 gulp.task('default', ['buildDev'], function () {
+    'use strict';
+    browserSync.init({
+        server: {
+            baseDir: "build"
+        },
+        open: false
+    });
 
-  browserSync.init({
-    server: {
-      baseDir: "build"
-    },
-    open: false
-  });
-
-  gulp.watch([
-    "./dev/scripts/**/*",
-    "./dev/styles/**/*",
-    "./dev/content/**/*",
-    "./dev/layouts/**/*",
-    "./dev/sources/**/*"
-  ], ['refresh']);
+    gulp.watch([
+        "./dev/scripts/**/*",
+        "./dev/styles/**/*",
+        "./dev/content/**/*",
+        "./dev/layouts/**/*",
+        "./dev/sources/**/*"
+    ], ['refresh']);
 });
 
 gulp.task('buildProd', function (cb) {
-  sequence([
-    'vendorScripts',
-    'productionScripts',
-    'productionStyles'
+    'use strict';
+    sequence([
+        'vendorScripts',
+        'productionScripts',
+        'productionStyles'
     ],
-    'metalsmith',
-    cb
-  )
+        'metalsmith',
+        cb
+        );
 });
 
 gulp.task('productionScripts', function () {
+    'use strict';
     return gulp.src(path.join(__dirname, scriptPath, '**/*.js'))
         .pipe(babel({
             presets: ['es2015']
         }))
         .pipe(order([
-          path.join(__dirname, scriptPath, 'ready.js'),
-          path.join(__dirname, scriptPath, 'modules/touchClick.js'),
-          path.join(__dirname, scriptPath, 'modules/hoverMenu.js'),
-          path.join(__dirname, scriptPath, 'modules/mobileMenu.js'),
-          path.join(__dirname, scriptPath, 'modules/youTubeVideos.js'),
-          path.join(__dirname, scriptPath, 'modules/lineNumbers.js'),
-          path.join(__dirname, scriptPath, 'modules/externalLinks.js'),
-          path.join(__dirname, scriptPath, 'modules/modifyMarketoForm.js'),
-          path.join(__dirname, scriptPath, 'modules/scrollHomeNav.js'),
-          path.join(__dirname, scriptPath, 'modules/smallImage.js'),
-          path.join(__dirname, scriptPath, 'modules/bannerBackground.js'),
-          path.join(__dirname, scriptPath, 'modules/scrollToTop.js')
+            path.join(__dirname, scriptPath, 'ready.js'),
+            path.join(__dirname, scriptPath, 'modules/touchClick.js'),
+            path.join(__dirname, scriptPath, 'modules/hoverMenu.js'),
+            path.join(__dirname, scriptPath, 'modules/mobileMenu.js'),
+            path.join(__dirname, scriptPath, 'modules/youTubeVideos.js'),
+            path.join(__dirname, scriptPath, 'modules/lineNumbers.js'),
+            path.join(__dirname, scriptPath, 'modules/externalLinks.js'),
+            path.join(__dirname, scriptPath, 'modules/modifyMarketoForm.js'),
+            path.join(__dirname, scriptPath, 'modules/scrollHomeNav.js'),
+            path.join(__dirname, scriptPath, 'modules/smallImage.js'),
+            path.join(__dirname, scriptPath, 'modules/bannerBackground.js'),
+            path.join(__dirname, scriptPath, 'modules/scrollToTop.js')
         ]))
         .pipe(concat('main.js'))
         .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/scripts')));
 });
 
 // compile style sheet for development
-gulp.task('productionStyles', function() {
+gulp.task('productionStyles', function () {
+    'use strict';
+
     return gulp.src(path.join(__dirname, stylePath, 'main.scss'))
         .pipe(sass({style: 'compressed'}))
         .pipe(autoprefixer('last 2 version'))

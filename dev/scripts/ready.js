@@ -1,6 +1,6 @@
-/* global jQuery, window, touchClick, hoverMenu, mobileMenu, youTubeVideos, lineNumbers, externalLinks,
-   modifyMarketoForm, scrollHomeNav, smallImage, bannerBackground, scrollToTop, confirmLeave, modalVideos, OP_MESSAGE_HEIGHT */
-/*eslint no-unused-vars: 0*/
+/*jslint browser: true*/
+/*global Event, jQuery, document, window, touchClick, hoverMenu, mobileMenu, youTubeVideos, lineNumbers, externalLinks, modifyMarketoForm, scrollHomeNav, smallImage, bannerBackground, scrollToTop, confirmLeave, modalVideos*/
+
 
 // custom event for api loaded
 var videoAPIReady = new Event("videoAPIReady");
@@ -13,14 +13,19 @@ tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName("script")[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+
 function onYouTubeIframeAPIReady() {
+    'use strict';
+
     window.dispatchEvent(videoAPIReady);
 }
 
 
-(function () {
-    //the document ready function
+(function ($) {
+    'use strict';
+
     $(function () {
+
         touchClick.init();
         hoverMenu.init();
         mobileMenu.init();
@@ -36,6 +41,6 @@ function onYouTubeIframeAPIReady() {
         modalVideos.init();
     });
     // end ready function
-})();
+}(jQuery));
 
 

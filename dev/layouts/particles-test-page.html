@@ -28,7 +28,7 @@
             context = cvs.getContext("2d");
         document.body.appendChild(cvs);
 
-        var numDots = 500,
+        var numDots = 100,
             n = numDots,
             currDot,
             maxRad = 300,
@@ -90,7 +90,7 @@
             currDot.y = _centerPt.y+Math.cos(currDot.ang)*radDiff;
 
             //currDot.ang += currDot.speed;
-            currDot.ang += currDot.speed*radDiff/20000;
+            currDot.ang += currDot.speed*radDiff/40000;
 
           }
 
@@ -108,7 +108,7 @@
               _context.beginPath();
               _context.moveTo(dot0.x, dot0.y);
               _context.lineTo(dot1.x, dot1.y);
-              _context.lineWidth = 1;
+              _context.lineWidth = 4;
               _context.strokeStyle = "rgb("+bright+","+bright+","+bright+")";
               _context.stroke();
             }
@@ -119,7 +119,7 @@
           while(n--){
             //console.log(currDot);
             _context.fillStyle= dots[n].fillColor;
-            _context.fillRect(dots[n].x, dots[n].y, 1, 1);
+            _context.fillRect(dots[n].x, dots[n].y, 4, 4);  // size of the dot... rectangle 
           }
           window.requestAnimationFrame(drawPoints);
         }
