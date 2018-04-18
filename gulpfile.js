@@ -1,39 +1,45 @@
 /*jslint regexp: true, nomen: true*/
 /*global require, process, console, __dirname*/
 
-var path = require('path');
-var argv = require('minimist')(process.argv.slice(2));
-var gulp = require('gulp');
-var browserSync = require('browser-sync').create();
+var path = require("path");
+var argv = require("minimist")(process.argv.slice(2));
+var gulp = require("gulp");
+var browserSync = require("browser-sync").create();
 
 
-var metalsmith = require('metalsmith');
-var drafts = require('metalsmith-drafts');
-var tags = require('./local_modules/metalsmith-tags-with-metadata');
-var categories = require('./local_modules/metalsmith-categories-with-metadata');
-var markdownSections = require('metalsmith-markdown-sections');
-var excerpts = require('metalsmith-excerpts');
-var permalinks = require('metalsmith-permalinks');
-var collections = require('metalsmith-collections');
-var pagination = require('metalsmith-pagination');
-var layouts = require('metalsmith-layouts');
-var inPlace = require('metalsmith-in-place');
-var assets = require('metalsmith-assets');
-var sitemap = require('metalsmith-sitemap');
-var robots = require('metalsmith-robots');
-var htmlMinifier = require('metalsmith-html-minifier');
-var metadata = require('metalsmith-metadata');
-var frontmatter = require('metalsmith-matters');
-var highlightCode = require('metalsmith-prism');
-var writemetadata = require('metalsmith-writemetadata');
-var renamer = require('metalsmith-renamer');
-var postsList = require('./local_modules/metalsmith-blog-helper');
+var metalsmith = require("metalsmith");
+var drafts = require("metalsmith-drafts");
+var tags = require("./local_modules/metalsmith-tags-with-metadata");
+var categories = require("./local_modules/metalsmith-categories-with-metadata");
+var markdownSections = require("metalsmith-markdown-sections");
+var excerpts = require("metalsmith-excerpts");
+var permalinks = require("metalsmith-permalinks");
+var collections = require("metalsmith-collections");
+var pagination = require("metalsmith-pagination");
+var layouts = require("metalsmith-layouts");
+var inPlace = require("metalsmith-in-place");
+var assets = require("metalsmith-assets");
+var sitemap = require("metalsmith-sitemap");
+var robots = require("metalsmith-robots");
+var htmlMinifier = require("metalsmith-html-minifier");
+var metadata = require("metalsmith-metadata");
+var frontmatter = require("metalsmith-matters");
+var highlightCode = require("metalsmith-prism");
+var writemetadata = require("metalsmith-writemetadata");
+var renamer = require("metalsmith-renamer");
+var postsList = require("./local_modules/metalsmith-blog-helper");
 //var postsList = require('./local_modules/metalsmith-blog-post-lists');
-var marked = require('marked');
-var ignore = require('metalsmith-ignore');
+var marked = require("marked");
+var msIgnore = require("metalsmith-ignore");
+
+var util = require('util');
+require('util.promisify').shim();
+var deleteEmptyDirectories = require('delete-empty');
+
+var getJobs = require("./local_modules/metalsmith-build-job-pages");
 
 //var mdPartials = require('./local_modules/metalsmith-markdown-partials');
-var mdPartials = require('metalsmith-markdown-partials');
+var mdPartials = require("metalsmith-markdown-partials");
 
 //var allPosts = require('./local_modules/metalsmith-all-blogs-list');
 
@@ -46,65 +52,68 @@ var layoutPath = "./dev/layouts";
 var destPath = "./build";
 
 // assets
-var sequence = require('gulp-sequence');
-var order = require('gulp-order');
-var sass = require('gulp-sass');
-var babel = require('gulp-babel');
-var sourcemaps = require('gulp-sourcemaps');
-var autoprefixer = require('gulp-autoprefixer');
-var concat = require('gulp-concat');
-var compressJS = require('gulp-uglify');
-var cleanCSS = require('gulp-clean-css');
+var sequence = require("gulp-sequence");
+var order = require("gulp-order");
+var sass = require("gulp-sass");
+var babel = require("gulp-babel");
+var sourcemaps = require("gulp-sourcemaps");
+var autoprefixer = require("gulp-autoprefixer");
+var concat = require("gulp-concat");
+var compressJS = require("gulp-uglify");
+var cleanCSS = require("gulp-clean-css");
 
 // template engine
-var nunjucks = require('nunjucks');
-var CaptureTag = require('nunjucks-capture');
-var dateFilter = require('nunjucks-date-filter');
+var nunjucks = require("nunjucks");
+var CaptureTag = require("nunjucks-capture");
+var dateFilter = require("nunjucks-date-filter");
 
 nunjucks
-    .configure(['./dev/layouts', './dev/layouts/partials'], {watch: false, autoescape: false})
-    .addExtension('CaptureTag', new CaptureTag())
-    .addFilter('is_string', function (obj) {
-        'use strict';
-        return typeof obj === 'string';
+    .configure(["./dev/layouts", "./dev/layouts/partials"], {watch: false, autoescape: false})
+    .addExtension("CaptureTag", new CaptureTag())
+    .addFilter("is_string", function (obj) {
+        "use strict";
+        return typeof obj === "string";
     })
-    .addFilter('is_array', function (obj) {
-        'use strict';
+    .addFilter("is_array", function (obj) {
+        "use strict";
         return Array.isArray(obj);
     })
-    .addFilter('date', dateFilter)
+    .addFilter("date", dateFilter)
     // replaces a file extension with a "/". Needed in generating custom XML feeds
-    .addFilter('makePermalink', function (obj) {
-        'use strict';
-        return obj.replace(/.md/g, '/');
+    .addFilter("makePermalink", function (obj) {
+        "use strict";
+        return obj.replace(/.md/g, "/");
     })
     // converts a date into a UTC string. Needed for XML dates
-    .addFilter('UTCdate', function (date) {
-        'use strict';
+    .addFilter("UTCdate", function (date) {
+        "use strict";
         return date.toUTCString();
     })
     // when building an XML page any text that contains html "<", ">" and "&" characters need to be escaped
-    .addFilter('escapeHTML', function (text) {
-        'use strict';
-        return (text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+    .addFilter("escapeHTML", function (text) {
+        "use strict";
+        return (text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
     })
     // strips all html from a string
-    .addFilter('stripHTML', function (htmlString) {
-        'use strict';
-        return htmlString.replace(/<[^>]+>/g, '');
+    .addFilter("stripHTML", function (htmlString) {
+        "use strict";
+        return htmlString.replace(/<[^>]+>/g, "");
     })
-    .addFilter('spaceToDash', function (string) {
-        'use strict';
+    .addFilter("spaceToDash", function (string) {
+        "use strict";
         return string.replace(/\s+/g, "-");
     });
 
 // metalsmith
 function setupMetalsmith(callback) {
-    'use strict';
+    "use strict";
 
     metalsmith(process.cwd())
-        .source('./dev/content')
-        .destination('./build')
+
+        //.use(getJobs())
+        
+        .source("./dev/content")
+        .destination("./build")
         .clean(true)
 
         // check if this works as expected !!!!!!!!!!!
@@ -122,8 +131,9 @@ function setupMetalsmith(callback) {
         .use(drafts())
 
         // ignore the partial markdown files in library
-        .use(ignore([
-            'library/*'
+        .use(msIgnore([
+            "library/*",
+            "data/*"
         ]))
 
         //.use(mdPartials({"libraryPath": contentPath + '/library/'}))
@@ -187,7 +197,7 @@ function setupMetalsmith(callback) {
                 "perPage": 5,
                 "layout": "blog.html",
                 "first": "blog/1/index.html",
-                "path": 'blog/:num/index.html',
+                "path": "blog/:num/index.html",
                 "pageMetadata": {
                     "title": "The Blog",
                     "has_top_message": true,
@@ -196,17 +206,11 @@ function setupMetalsmith(callback) {
                 }
             }
         }))
-/*
-        // creates the allBlogPost list that can be used to build a blogs by year list
-        .use(allPosts())
-*/
+
         .use(postsList({
             "latest_quantity": 2, // length of the recent posts list
             "featured_quantity": 2 // length of the featured posts list
         }))
-
-
-
 
         // in-place enables import code sections ??
         .use(inPlace({
@@ -220,7 +224,7 @@ function setupMetalsmith(callback) {
             "smartLists": true,
             "gfm": true,
             "tables": true,
-            "langPrefix": 'language-'
+            "langPrefix": "language-"
         }))
 
         .use(highlightCode({
@@ -243,9 +247,9 @@ function setupMetalsmith(callback) {
         // file extension to xml
         .use(renamer({
             htmlToXml: {
-                pattern: 'feeds/*.html',
+                pattern: "feeds/*.html",
                 rename: function (name) {
-                    return name.replace(/html/, 'xml');
+                    return name.replace(/html/, "xml");
                 }
             }
         }))
@@ -267,11 +271,11 @@ function setupMetalsmith(callback) {
             "sitemap": "http://www.sitename.com/sitemap.xml"
         }))
 
-        .use(writemetadata({
-            pattern: ['**/*.html'],
-            ignorekeys: ['next', 'contents', 'previous'],
-            bufferencoding: 'utf8'
-        }))
+        //.use(writemetadata({
+        //    pattern: ["**/*.html"],
+        //    ignorekeys: ["next", "contents", "previous"],
+        //    bufferencoding: "utf8"
+        //}))
 
         .build(function (err) {
             if (err) {
@@ -283,84 +287,90 @@ function setupMetalsmith(callback) {
 }
 
 //Gulp tasks
-gulp.task('metalsmith', function (callback) {
-    'use strict';
+gulp.task("metalsmith", function (callback) {
+    "use strict";
     setupMetalsmith(callback);
 });
 
-gulp.task('vendorScripts', function () {
-    'use strict';
+gulp.task("vendorScripts", function () {
+    "use strict";
     return gulp.src([
         "node_modules/jquery/dist/jquery.js",
         "node_modules/jquery.easing/jquery.easing.js",
         "node_modules/jquery-hoverintent/jquery.hoverIntent.js",
         "node_modules/js-breakpoints/breakpoints.js"
     ])
-        .pipe(concat('vendors.min.js'))
+        .pipe(concat("vendors.min.js"))
         .pipe(compressJS())
-        .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/scripts')));
+        .pipe(gulp.dest(path.join(__dirname, assetPath, "assets/scripts")));
 });
 
-gulp.task('scripts', function () {
-    'use strict';
-    return gulp.src(path.join(__dirname, scriptPath, '**/*.js'))
+gulp.task("scripts", function () {
+    "use strict";
+    return gulp.src(path.join(__dirname, scriptPath, "**/*.js"))
         .pipe(sourcemaps.init())
         .pipe(babel({
-            presets: ['es2015']
+            presets: ["es2015"]
         }))
         .pipe(order([
-            path.join(__dirname, scriptPath, 'ready.js'),
-            path.join(__dirname, scriptPath, 'modules/touchClick.js'),
-            path.join(__dirname, scriptPath, 'modules/hoverMenu.js'),
-            path.join(__dirname, scriptPath, 'modules/mobileMenu.js'),
-            path.join(__dirname, scriptPath, 'modules/youTubeVideos.js'),
-            path.join(__dirname, scriptPath, 'modules/lineNumbers.js'),
-            path.join(__dirname, scriptPath, 'modules/externalLinks.js'),
-            path.join(__dirname, scriptPath, 'modules/modifyMarketoForm.js'),
-            path.join(__dirname, scriptPath, 'modules/scrollHomeNav.js'),
-            path.join(__dirname, scriptPath, 'modules/smallImage.js'),
-            path.join(__dirname, scriptPath, 'modules/bannerBackground.js'),
-            path.join(__dirname, scriptPath, 'modules/scrollToTop.js'),
-            path.join(__dirname, scriptPath, 'modules/modalVideos.js')
+            path.join(__dirname, scriptPath, "ready.js"),
+            path.join(__dirname, scriptPath, "modules/touchClick.js"),
+            path.join(__dirname, scriptPath, "modules/hoverMenu.js"),
+            path.join(__dirname, scriptPath, "modules/mobileMenu.js"),
+            path.join(__dirname, scriptPath, "modules/youTubeVideos.js"),
+            path.join(__dirname, scriptPath, "modules/lineNumbers.js"),
+            path.join(__dirname, scriptPath, "modules/externalLinks.js"),
+            path.join(__dirname, scriptPath, "modules/modifyMarketoForm.js"),
+            path.join(__dirname, scriptPath, "modules/scrollHomeNav.js"),
+            path.join(__dirname, scriptPath, "modules/smallImage.js"),
+            path.join(__dirname, scriptPath, "modules/bannerBackground.js"),
+            path.join(__dirname, scriptPath, "modules/scrollToTop.js"),
+            path.join(__dirname, scriptPath, "modules/modalVideos.js")
         ]))
-        .pipe(concat('main.js'))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/scripts')));
+        .pipe(concat("main.js"))
+        .pipe(sourcemaps.write("."))
+        .pipe(gulp.dest(path.join(__dirname, assetPath, "assets/scripts")));
 });
 
 // compile style sheet for development
-gulp.task('styles', function () {
-    'use strict';
-    return gulp.src(path.join(__dirname, stylePath, 'main.scss'))
+gulp.task("styles", function () {
+    "use strict";
+    return gulp.src(path.join(__dirname, stylePath, "main.scss"))
         .pipe(sourcemaps.init())
-        .pipe(sass({style: 'expanded'}))
-        .pipe(autoprefixer('last 2 version'))
+        .pipe(sass({style: "expanded"}))
+        .pipe(autoprefixer("last 2 version"))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/styles')));
+        .pipe(gulp.dest(path.join(__dirname, assetPath, "assets/styles")));
 });
 
-gulp.task('buildDev', function (cb) {
-    'use strict';
+// delete all empty directories after the project build
+gulp.task('deleteEmptyDir', function () {
+    "use strict";
+    deleteEmptyDirectories.sync(destPath);
+});
+
+gulp.task("buildDev", function (cb) {
+    "use strict";
     sequence([
-        'vendorScripts',
-        'scripts',
-        'styles'
+        "vendorScripts",
+        "scripts",
+        "styles"
     ],
-        'metalsmith',
-        cb
-        );
+            "metalsmith",
+            "deleteEmptyDir",
+            cb);
 });
 
 // having buildDev as a dependency for the refresh task insures that they are executed before browerSync is run
 // reference: browsersync.io/docs/gulp
-gulp.task('refresh', ['buildDev'], function (done) {
-    'use strict';
+gulp.task("refresh", ["buildDev"], function (done) {
+    "use strict";
     browserSync.reload();
     done();
 });
 
-gulp.task('default', ['buildDev'], function () {
-    'use strict';
+gulp.task("default", ["buildDev"], function () {
+    "use strict";
     browserSync.init({
         server: {
             baseDir: "build"
@@ -374,51 +384,53 @@ gulp.task('default', ['buildDev'], function () {
         "./dev/content/**/*",
         "./dev/layouts/**/*",
         "./dev/sources/**/*"
-    ], ['refresh']);
+    ], ["refresh"]);
 });
 
-gulp.task('buildProd', function (cb) {
-    'use strict';
+gulp.task("buildProd", function (cb) {
+    "use strict";
     sequence([
-        'vendorScripts',
-        'productionScripts',
-        'productionStyles'
+        "vendorScripts",
+        "productionScripts",
+        "productionStyles"
     ],
-        'metalsmith',
-        cb
-        );
+            "metalsmith",
+            "deleteEmptyDir",
+            cb);
+
+    //deleteEmptyDirectories.sync(destPath);
 });
 
-gulp.task('productionScripts', function () {
-    'use strict';
-    return gulp.src(path.join(__dirname, scriptPath, '**/*.js'))
+gulp.task("productionScripts", function () {
+    "use strict";
+    return gulp.src(path.join(__dirname, scriptPath, "**/*.js"))
         .pipe(babel({
-            presets: ['es2015']
+            presets: ["es2015"]
         }))
         .pipe(order([
-            path.join(__dirname, scriptPath, 'ready.js'),
-            path.join(__dirname, scriptPath, 'modules/touchClick.js'),
-            path.join(__dirname, scriptPath, 'modules/hoverMenu.js'),
-            path.join(__dirname, scriptPath, 'modules/mobileMenu.js'),
-            path.join(__dirname, scriptPath, 'modules/youTubeVideos.js'),
-            path.join(__dirname, scriptPath, 'modules/lineNumbers.js'),
-            path.join(__dirname, scriptPath, 'modules/externalLinks.js'),
-            path.join(__dirname, scriptPath, 'modules/modifyMarketoForm.js'),
-            path.join(__dirname, scriptPath, 'modules/scrollHomeNav.js'),
-            path.join(__dirname, scriptPath, 'modules/smallImage.js'),
-            path.join(__dirname, scriptPath, 'modules/bannerBackground.js'),
-            path.join(__dirname, scriptPath, 'modules/scrollToTop.js')
+            path.join(__dirname, scriptPath, "ready.js"),
+            path.join(__dirname, scriptPath, "modules/touchClick.js"),
+            path.join(__dirname, scriptPath, "modules/hoverMenu.js"),
+            path.join(__dirname, scriptPath, "modules/mobileMenu.js"),
+            path.join(__dirname, scriptPath, "modules/youTubeVideos.js"),
+            path.join(__dirname, scriptPath, "modules/lineNumbers.js"),
+            path.join(__dirname, scriptPath, "modules/externalLinks.js"),
+            path.join(__dirname, scriptPath, "modules/modifyMarketoForm.js"),
+            path.join(__dirname, scriptPath, "modules/scrollHomeNav.js"),
+            path.join(__dirname, scriptPath, "modules/smallImage.js"),
+            path.join(__dirname, scriptPath, "modules/bannerBackground.js"),
+            path.join(__dirname, scriptPath, "modules/scrollToTop.js")
         ]))
-        .pipe(concat('main.js'))
-        .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/scripts')));
+        .pipe(concat("main.js"))
+        .pipe(gulp.dest(path.join(__dirname, assetPath, "assets/scripts")));
 });
 
 // compile style sheet for development
-gulp.task('productionStyles', function () {
-    'use strict';
+gulp.task("productionStyles", function () {
+    "use strict";
 
-    return gulp.src(path.join(__dirname, stylePath, 'main.scss'))
-        .pipe(sass({style: 'compressed'}))
-        .pipe(autoprefixer('last 2 version'))
-        .pipe(gulp.dest(path.join(__dirname, assetPath, 'assets/styles')));
+    return gulp.src(path.join(__dirname, stylePath, "main.scss"))
+        .pipe(sass({style: "compressed"}))
+        .pipe(autoprefixer("last 2 version"))
+        .pipe(gulp.dest(path.join(__dirname, assetPath, "assets/styles")));
 });

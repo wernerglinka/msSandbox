@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" itemscope itemtype=”http://schema.org/Article”>
+  <head></head>
+
+  <body>
+   
+    <div class="content-wrapper">
+        <div class="container">
+
+            {{ contents }}
+
+            
+        </div>
+    </div>
+
+    <!-- START COMEET CODE -->
+    <script>
+       window.comeetInit = function() {
+          COMEET.init({
+             "token":       "1D6758CDA582CDACDAB0492E1D6EB0",
+             "company-uid": "D1.006",
+             "company-name":"PerimeterX",
+             "color":       "278fe6", //optional
+             "font-size":   "13px" //optional
+             //add more parameters here
+          });
+       };
+
+       (function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) {return; } js = d.createElement(s); js.id = id;
+       js.src = "//www.comeet.co/careers-api/api.js"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'comeet-jsapi'));
+    </script>
+    <!-- END COMEET CODE -->
+
+  </body>
+</html>
