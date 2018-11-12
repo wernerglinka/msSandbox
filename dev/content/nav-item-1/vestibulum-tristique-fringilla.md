@@ -17,7 +17,10 @@ Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel aug
 
 **Videos may be played inline or in an overlay. Here is an example of a video played in an overlay:**
 
-<a class="modal-video" href="https://youtu.be/30sorJ54rdM" data-video-id="30sorJ54rdM"  data-video-attr="">Test Video Link<i class="icon icon-play inline-video-link"></i></a>
+- <a class="modal-video" href="https://youtu.be/30sorJ54rdM" data-video-id="30sorJ54rdM"  data-video-attr="">Test Video Link 1<i class="icon icon-play inline-video-link"></i></a>
+- <a class="modal-video" href="https://youtu.be/cJwJ11-pmxg" data-video-id="cJwJ11-pmxg"  data-video-attr="">Test Video Link 2<i class="icon icon-play inline-video-link"></i></a>
+- <a class="modal-video" href="https://youtu.be/opuzm5rvNig" data-video-id="opuzm5rvNig"  data-video-attr="">Test Video Link 3<i class="icon icon-play inline-video-link"></i></a>
+
 
 Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas sed diam eget risus varius blandit sit amet non magna. Donec id elit non mi porta gravida at eget metus. Donec sed odio dui.
 

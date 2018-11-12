@@ -16,6 +16,12 @@ banner_video_src: /assets/media/test.m4v
 banner_video_controls: autoplay loop
 banner_video_poster: /assets/media/test-poster.jpg
 ---
+<h2>Download Examples</h2>
+
+<a href="http://50.224.28.39/RichMediaContent/Duralast/DL100/Product%20Copy/DL100.docx" download>docx Download</a><br><br>
+<a href="http://50.224.28.39/PDFs/SecurityMetrics%20Receipt.pdf" download="test.pdf">pdf Download</a><br><br>
+<a href="http://50.224.28.39/Pics/ClickMe.png" download>png Download</a>
+
 
 Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus **et magnis** dis parturient montes, nascetur ridiculus mus.
 

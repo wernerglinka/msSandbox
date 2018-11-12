@@ -29,7 +29,6 @@ var writemetadata = require("metalsmith-writemetadata");
 var renamer = require("metalsmith-renamer");
 var postsList = require("./local_modules/metalsmith-blog-helper");
 //var postsList = require('./local_modules/metalsmith-blog-post-lists');
-var marked = require("marked");
 var msIgnore = require("metalsmith-ignore");
 
 var util = require('util');
@@ -44,11 +43,9 @@ var mdPartials = require("metalsmith-markdown-partials");
 //var allPosts = require('./local_modules/metalsmith-all-blogs-list');
 
 // path variables
-var contentPath = "./dev/content";
 var assetPath = "./dev/sources";
 var scriptPath = "./dev/scripts";
 var stylePath = "./dev/styles";
-var layoutPath = "./dev/layouts";
 var destPath = "./build";
 
 // assets
@@ -60,7 +57,7 @@ var sourcemaps = require("gulp-sourcemaps");
 var autoprefixer = require("gulp-autoprefixer");
 var concat = require("gulp-concat");
 var compressJS = require("gulp-uglify");
-var cleanCSS = require("gulp-clean-css");
+
 
 // template engine
 var nunjucks = require("nunjucks");
@@ -314,18 +311,7 @@ gulp.task("scripts", function () {
         }))
         .pipe(order([
             path.join(__dirname, scriptPath, "ready.js"),
-            path.join(__dirname, scriptPath, "modules/touchClick.js"),
-            path.join(__dirname, scriptPath, "modules/hoverMenu.js"),
-            path.join(__dirname, scriptPath, "modules/mobileMenu.js"),
-            path.join(__dirname, scriptPath, "modules/youTubeVideos.js"),
-            path.join(__dirname, scriptPath, "modules/lineNumbers.js"),
-            path.join(__dirname, scriptPath, "modules/externalLinks.js"),
-            path.join(__dirname, scriptPath, "modules/modifyMarketoForm.js"),
-            path.join(__dirname, scriptPath, "modules/scrollHomeNav.js"),
-            path.join(__dirname, scriptPath, "modules/smallImage.js"),
-            path.join(__dirname, scriptPath, "modules/bannerBackground.js"),
-            path.join(__dirname, scriptPath, "modules/scrollToTop.js"),
-            path.join(__dirname, scriptPath, "modules/modalVideos.js")
+            path.join(__dirname, scriptPath, "modules/**.js")
         ]))
         .pipe(concat("main.js"))
         .pipe(sourcemaps.write("."))
@@ -409,17 +395,18 @@ gulp.task("productionScripts", function () {
         }))
         .pipe(order([
             path.join(__dirname, scriptPath, "ready.js"),
-            path.join(__dirname, scriptPath, "modules/touchClick.js"),
-            path.join(__dirname, scriptPath, "modules/hoverMenu.js"),
-            path.join(__dirname, scriptPath, "modules/mobileMenu.js"),
-            path.join(__dirname, scriptPath, "modules/youTubeVideos.js"),
-            path.join(__dirname, scriptPath, "modules/lineNumbers.js"),
-            path.join(__dirname, scriptPath, "modules/externalLinks.js"),
-            path.join(__dirname, scriptPath, "modules/modifyMarketoForm.js"),
-            path.join(__dirname, scriptPath, "modules/scrollHomeNav.js"),
-            path.join(__dirname, scriptPath, "modules/smallImage.js"),
-            path.join(__dirname, scriptPath, "modules/bannerBackground.js"),
-            path.join(__dirname, scriptPath, "modules/scrollToTop.js")
+            path.join(__dirname, scriptPath, "modules/**.js")
+            //path.join(__dirname, scriptPath, "modules/touchClick.js"),
+            //path.join(__dirname, scriptPath, "modules/hoverMenu.js"),
+            //path.join(__dirname, scriptPath, "modules/mobileMenu.js"),
+            //path.join(__dirname, scriptPath, "modules/youTubeVideos.js"),
+            //path.join(__dirname, scriptPath, "modules/lineNumbers.js"),
+            //path.join(__dirname, scriptPath, "modules/externalLinks.js"),
+            //path.join(__dirname, scriptPath, "modules/modifyMarketoForm.js"),
+            //path.join(__dirname, scriptPath, "modules/scrollHomeNav.js"),
+            //path.join(__dirname, scriptPath, "modules/smallImage.js"),
+            //path.join(__dirname, scriptPath, "modules/bannerBackground.js"),
+            //path.join(__dirname, scriptPath, "modules/scrollToTop.js")
         ]))
         .pipe(concat("main.js"))
         .pipe(gulp.dest(path.join(__dirname, assetPath, "assets/scripts")));
