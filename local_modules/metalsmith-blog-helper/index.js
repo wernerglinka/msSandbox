@@ -44,7 +44,7 @@ function plugin(opts) {
                     "date":   thisFile.date,
                     "author": thisFile.author,
                     "path":   thisFile.path.replace('.md', ''),
-                    "image":  thisFile.image.feature
+                    //"image":  thisFile.image.feature
                 }
                 allSortedBlogPosts.push(temp);
                 allSortedBlogPosts.sort(function(a,b) {

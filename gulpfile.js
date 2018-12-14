@@ -31,9 +31,9 @@ var postsList = require("./local_modules/metalsmith-blog-helper");
 //var postsList = require('./local_modules/metalsmith-blog-post-lists');
 var msIgnore = require("metalsmith-ignore");
 
-var util = require('util');
-require('util.promisify').shim();
-var deleteEmptyDirectories = require('delete-empty');
+var util = require("util");
+require("util.promisify").shim();
+var deleteEmptyDirectories = require("delete-empty");
 
 var getJobs = require("./local_modules/metalsmith-build-job-pages");
 
@@ -330,7 +330,7 @@ gulp.task("styles", function () {
 });
 
 // delete all empty directories after the project build
-gulp.task('deleteEmptyDir', function () {
+gulp.task("deleteEmptyDir", function () {
     "use strict";
     deleteEmptyDirectories.sync(destPath);
 });
@@ -381,7 +381,7 @@ gulp.task("buildProd", function (cb) {
         "productionStyles"
     ],
             "metalsmith",
-            "deleteEmptyDir",
+            //"deleteEmptyDir",
             cb);
 
     //deleteEmptyDirectories.sync(destPath);
